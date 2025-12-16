@@ -1,17 +1,17 @@
+import React from 'react';
+import { StyleSheet, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring
+} from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { usePathname, useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 import { ThemedText } from '@/components/ui/themed-text';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useThemeColor } from '@/hooks/use-theme-color';
-import { Ionicons } from '@expo/vector-icons';
-import { usePathname, useRouter } from 'expo-router';
-import React from 'react';
-import { StyleSheet, TouchableOpacity, useWindowDimensions, View } from 'react-native';
-import Animated, {
-    useAnimatedStyle,
-    useSharedValue,
-    withSpring
-} from 'react-native-reanimated';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
 
@@ -41,8 +41,8 @@ export function Navbar() {
   const activeColor = Colors[colorScheme ?? 'light'].tint;
   const inactiveColor = useThemeColor(
     {
-      light: Colors.light.tabIconDefault,
-      dark: Colors.dark.tabIconDefault,
+      light: '#1A202C', // Beyaz background üzerinde daha belirgin
+      dark: '#CBD5E0', // Daha belirgin renk
     },
     'icon'
   );
@@ -111,10 +111,20 @@ export function Navbar() {
               onPress={() => handlePress(item.route)}
               activeOpacity={0.7}
             >
-              <Ionicons 
-                name={iconName} 
-                size={24} 
-                color={itemColor} 
+              {isActive && (
+                <View
+                  style={[
+                    styles.activeBorder,
+                    {
+                      backgroundColor: activeColor,
+                    },
+                  ]}
+                />
+              )}
+              <Ionicons
+                name={iconName}
+                size={24}
+                color={itemColor}
                 style={styles.icon}
               />
               <ThemedText
@@ -155,6 +165,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: '100%',
+    position: 'relative',
+  },
+  activeBorder: {
+    position: 'absolute',
+    top: -8,
+    left: 0,
+    right: 0,
+    height: 3,
+    backgroundColor: '#22C55E',
   },
   icon: {
     marginBottom: 4,

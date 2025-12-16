@@ -1,12 +1,8 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import MarketsScreen from '@/screens/MarketsScreen';
-import MarketDetailScreen from '@/screens/MarketDetailScreen';
-
-export type MarketStackParamList = {
-  Markets: undefined;
-  MarketDetail: { id: string };
-};
+import MarketsScreen from '@/screens/market/MarketsScreen';
+import MarketDetailScreen from '@/screens/marketDetail/MarketDetailScreen';
+import { MarketStackParamList } from '@/types';
 
 const Stack = createNativeStackNavigator<MarketStackParamList>();
 
@@ -26,5 +22,4 @@ export default function MarketStack() {
     </Stack.Navigator>
   );
 }
-
 

@@ -1,8 +1,8 @@
 import React from 'react';
-import { NavigationContainer, DefaultTheme, DarkTheme, Theme } from '@react-navigation/native';
+import { DarkTheme, DefaultTheme, NavigationContainer, Theme } from '@react-navigation/native';
+import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import RootNavigator from './navigation/RootNavigator';
-import { Colors } from '@/constants/theme';
 
 const lightTheme: Theme = {
   ...DefaultTheme,
@@ -37,6 +37,4 @@ export default function AppRoot() {
     </NavigationContainer>
   );
 }
-
-
 
