@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { ThemedText } from '../themed-text';
 import { useThemeColor } from '@/hooks/use-theme-color';
+import { styles } from './styles';
 
 interface EmptyStateProps {
   message?: string;
@@ -18,16 +19,4 @@ export function EmptyState({ message = 'Veri bulunamadı' }: EmptyStateProps) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 32,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  message: {
-    fontSize: 14,
-    textAlign: 'center',
-  },
-});
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ThemedText } from '@/components/ui/themed-text';
 import { ThemedView } from '@/components/ui/themed-view';
-import { CustomGrid } from '@/components/ui/custom-grid';
+import { CustomGrid } from '@/components/ui';
 import { quickTransactionColumns } from '@/db/columns/quickTransactionColumns';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getQuickTransaction } from '@/store/quickTransactions';

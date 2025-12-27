@@ -1,20 +1,16 @@
-import React, { useState, useMemo } from 'react';
-import { View, TextInput, Pressable, ScrollView, Modal } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { useForm, Controller } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import React, { useState } from 'react';
+import { View } from 'react-native';
 import { ThemedView } from '@/components/ui/themed-view';
 import { ThemedText } from '@/components/ui/themed-text';
 import { Button } from '@/components/ui/button';
+import { CurrencyPairSelector, AmountInput, PriceDisplay } from '@/components/ui';
+import { CurrencyPickerModal, ConnectionStatus } from './components';
 import { useThemeColor } from '@/hooks/use-theme-color';
 import { useCurrencySocket } from '@/hooks/use-currency-socket';
-import { cleanNumericInput } from '@/utils';
-import { CURRENCIES, CURRENCIES_NAMES } from '@/feautures/market/constants';
 import { useAppDispatch } from '@/store/hooks';
-import { getQuickTransaction } from '@/store/quickTransactions';
-import { createTransactionSchema, type CreateTransactionFormData } from './validation';
+import { getQuickTransaction, postQuickTransaction } from '@/store/quickTransactions';
 import { CreateQuickTransaction } from '@/store/quickTransactions/types';
-import { postQuickTransaction } from '@/store/quickTransactions';
+import { useTransactionForm } from './hooks/use-transaction-form';
 import { styles, getDynamicStyles } from './styles';
 
 export default function CreateTransaction() {
@@ -25,45 +21,18 @@ export default function CreateTransaction() {
   const [showBaseAssetPicker, setShowBaseAssetPicker] = useState(false);
 
   const {
-    control,
-    handleSubmit,
-    watch,
-    setValue,
-    formState: { errors, isSubmitting },
-  } = useForm({
-    resolver: zodResolver(createTransactionSchema),
-    defaultValues: {
-      amount: '',
-      baseAsset: '',
-      quoteAsset: 'TRY',
-    },
-  });
+    form,
+    baseAsset,
+    quoteAsset,
+    amount,
+    availableBaseAssets,
+    price,
+    calculatedTotal,
+  } = useTransactionForm({ socketCurrencies });
 
-  const baseAsset = watch('baseAsset');
-  const quoteAsset = watch('quoteAsset');
-  const amount = watch('amount');
+  const { control, handleSubmit, setValue, formState: { errors, isSubmitting } } = form;
 
-  // WebSocket'ten gelen currency'leri filtrele ve sırala
-  const availableBaseAssets = useMemo(() => {
-    const available = CURRENCIES.filter((currency) => {
-      return socketCurrencies[currency] !== undefined;
-    });
-    return available;
-  }, [socketCurrencies]);
-
-  // Seçili base asset'in fiyatını al
-  const selectedBaseCurrency = baseAsset ? socketCurrencies[baseAsset] : null;
-  const price = selectedBaseCurrency?.buyPrice || 0;
-
-  // Hesaplanan toplam tutar
-  const calculatedTotal = useMemo(() => {
-    if (!amount || !price) return 0;
-    const numAmount = parseFloat(amount);
-    if (isNaN(numAmount) || numAmount <= 0) return 0;
-    return numAmount * price;
-  }, [amount, price]);
-
-  const onSubmit = async (data: CreateTransactionFormData) => {
+  const onSubmit = async (data: any) => {
     try {
       const amountNum = parseFloat(data.amount);
       const total = amountNum * price;
@@ -75,7 +44,7 @@ export default function CreateTransaction() {
         total: total,
         side: 'buy',
         transactionDate: new Date(),
-      }
+      };
 
       await dispatch(postQuickTransaction(postData));
       await dispatch(getQuickTransaction());
@@ -95,116 +64,27 @@ export default function CreateTransaction() {
         Miktar ve döviz çifti seçerek yeni işlem ekleyin
       </ThemedText>
 
-      {!isConnected && (
-        <ThemedView style={styles.connectionStatus}>
-          <Ionicons name="warning-outline" size={16} color={dynamicStyles.warningIcon()} />
-          <ThemedText style={styles.connectionStatusText}>
-            Fiyat verileri yükleniyor...
-          </ThemedText>
-        </ThemedView>
-      )}
+      <ConnectionStatus isConnected={isConnected} />
 
       <View style={styles.formContainer}>
-        {/* Base Asset Seçimi */}
-        <View style={styles.inputGroup}>
-          <ThemedText style={styles.label}>Döviz Çifti</ThemedText>
-          <View style={styles.currencyPairContainer}>
-            <Controller
-              control={control}
-              name="baseAsset"
-              render={({ field: { value } }) => (
-                <Pressable
-                  style={[
-                    styles.currencySelector,
-                    dynamicStyles.currencySelector(!!errors.baseAsset),
-                  ]}
-                  onPress={() => setShowBaseAssetPicker(true)}
-                >
-                  <ThemedText
-                    style={[
-                      styles.currencySelectorText,
-                      dynamicStyles.currencySelectorText(!!value),
-                    ]}
-                  >
-                    {value || 'Varlık Seçin'}
-                  </ThemedText>
-                  <Ionicons
-                    name="chevron-down"
-                    size={20}
-                    color={dynamicStyles.currencySelectorIcon()}
-                  />
-                </Pressable>
-              )}
-            />
+        <CurrencyPairSelector
+          control={control}
+          errors={errors}
+          onBaseAssetPress={() => setShowBaseAssetPicker(true)}
+          quoteAsset={quoteAsset}
+          dynamicStyles={dynamicStyles}
+        />
 
-            <ThemedText style={styles.divider}>/</ThemedText>
+        <AmountInput control={control} errors={errors} dynamicStyles={dynamicStyles} />
 
-            <View style={[styles.currencySelector, dynamicStyles.quoteAssetSelector()]}>
-              <ThemedText
-                style={[styles.currencySelectorText, dynamicStyles.quoteAssetText()]}
-              >
-                TRY
-              </ThemedText>
-            </View>
-          </View>
-          {errors.baseAsset && (
-            <ThemedText style={styles.errorText}>{errors.baseAsset.message}</ThemedText>
-          )}
-        </View>
-               {/* Miktar Input */}
-               <View style={styles.inputGroup}>
-          <ThemedText style={styles.label}>Miktar</ThemedText>
-          <Controller
-            control={control}
-            name="amount"
-            render={({ field: { onChange, value } }) => (
-              <TextInput
-                style={[styles.input, dynamicStyles.input(!!errors.amount)]}
-                value={value}
-                onChangeText={(text) => {
-                  const cleaned = cleanNumericInput(text);
-                  onChange(cleaned);
-                }}
-                placeholder="0.00"
-                placeholderTextColor={dynamicStyles.inputPlaceholder()}
-                keyboardType="decimal-pad"
-              />
-            )}
-          />
-          {errors.amount && (
-            <ThemedText style={styles.errorText}>{errors.amount.message}</ThemedText>
-          )}
-        </View>
+        <PriceDisplay
+          baseAsset={baseAsset}
+          quoteAsset={quoteAsset}
+          price={price}
+          amount={amount}
+          calculatedTotal={calculatedTotal}
+        />
 
-        {/* Otomatik Fiyat Gösterimi */}
-        {baseAsset && price > 0 && (
-          <View style={styles.priceContainer}>
-            <View style={styles.priceRow}>
-              <ThemedText style={styles.priceLabel}>Fiyat:</ThemedText>
-              <ThemedText style={styles.priceValue}>
-                1 {baseAsset} = {price.toLocaleString('tr-TR', {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}{' '}
-                {quoteAsset}
-              </ThemedText>
-            </View>
-            {amount && calculatedTotal > 0 && (
-              <View style={styles.priceRow}>
-                <ThemedText style={styles.priceLabel}>Toplam:</ThemedText>
-                <ThemedText style={styles.totalValue}>
-                  {calculatedTotal.toLocaleString('tr-TR', {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}{' '}
-                  {quoteAsset}
-                </ThemedText>
-              </View>
-            )}
-          </View>
-        )}
-
-        {/* Submit Button */}
         <Button
           title="Portföy'e Ekle"
           onPress={handleSubmit(onSubmit)}
@@ -216,66 +96,14 @@ export default function CreateTransaction() {
         />
       </View>
 
-      {/* Base Asset Picker Modal */}
-      <Modal
+      <CurrencyPickerModal
         visible={showBaseAssetPicker}
-        transparent={true}
-        animationType="slide"
-        onRequestClose={() => setShowBaseAssetPicker(false)}
-      >
-        <Pressable
-          style={styles.modalOverlay}
-          onPress={() => setShowBaseAssetPicker(false)}
-        >
-          <Pressable onPress={(e) => e.stopPropagation()}>
-            <ThemedView card style={styles.modalContent}>
-            <View style={styles.modalHeader}>
-              <ThemedText style={styles.modalTitle}>Varlık Seçin</ThemedText>
-              <Pressable onPress={() => setShowBaseAssetPicker(false)}>
-                <Ionicons name="close" size={24} color={dynamicStyles.modalCloseIcon()} />
-              </Pressable>
-            </View>
-            <ScrollView style={styles.modalBody}>
-              {availableBaseAssets?.map((currency) => {
-                const currencyData = socketCurrencies?.[currency];
-                return (
-                  <Pressable
-                    key={currency}
-                    style={[
-                      styles.currencyOption,
-                      dynamicStyles.currencyOption(baseAsset === currency),
-                    ]}
-                    onPress={(e) => {
-                      e.stopPropagation();
-                      setValue('baseAsset', currency);
-                      setShowBaseAssetPicker(false);
-                    }}
-                  >
-                    <View style={styles.currencyOptionContent}>
-                      <ThemedText style={styles.currencyOptionCode}>{currency}</ThemedText>
-                      <ThemedText style={styles.currencyOptionName}>
-                        {CURRENCIES_NAMES[currency as keyof typeof CURRENCIES_NAMES] ||
-                          currency}
-                      </ThemedText>
-                    </View>
-                    {currencyData && (
-                      <ThemedText style={styles.currencyOptionPrice}>
-                        {currencyData.buyPrice.toLocaleString('tr-TR', {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })}{' '}
-                        TRY
-                      </ThemedText>
-                    )}
-                  </Pressable>
-                );
-              })}
-            </ScrollView>
-            </ThemedView>
-          </Pressable>
-        </Pressable>
-      </Modal>
-
+        onClose={() => setShowBaseAssetPicker(false)}
+        availableCurrencies={availableBaseAssets}
+        selectedCurrency={baseAsset}
+        onSelectCurrency={(currency) => setValue('baseAsset', currency)}
+        currencies={socketCurrencies}
+      />
     </ThemedView>
   );
 }

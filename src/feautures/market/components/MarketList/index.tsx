@@ -3,7 +3,7 @@ import { Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemedText } from '@/components/ui/themed-text';
 import { ThemedView } from '@/components/ui/themed-view';
-import { CustomGrid } from '@/components/ui/custom-grid';
+import { CustomGrid } from '@/components/ui';
 import { currencyColumns } from '@/db/columns';
 import { useThemeColor } from '@/hooks/use-theme-color';
 import { useCurrencySocket } from '@/hooks/use-currency-socket';

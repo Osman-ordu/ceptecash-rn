@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { View, FlatList, ActivityIndicator, Pressable } from 'react-native';
 import { ThemedText } from '@/components/ui/themed-text';
 import { ThemedView } from '@/components/ui/themed-view';
-import { EmptyState } from '@/components/ui/empty-state';
+import { EmptyState } from '@/components/ui/EmptyState';
 import { styles } from './styles';
 
 export interface Column {
@@ -75,6 +75,7 @@ export function CustomGrid({
     if (!tab || !tabConfig || !activeTab) return data;
     return data.filter((row) => row[tabConfig.type] === activeTab);
   }, [data, tab, tabConfig, activeTab]);
+
   const renderHeader = () => {
     return (
       <View style={[styles.tableHeader, headerStyle]}>

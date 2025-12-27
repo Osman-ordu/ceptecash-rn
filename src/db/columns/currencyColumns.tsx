@@ -1,5 +1,5 @@
 import React from 'react';
-import { Column } from '@/components/ui/custom-grid';
+import { Column } from '@/components/ui';
 import { AnimatedPrice } from '@/feautures/market/components/AnimatedPrice';
 import { styles } from '@/feautures/market/components/MarketList/styles';
 
