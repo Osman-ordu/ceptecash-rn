@@ -21,7 +21,6 @@ export type IconProps = {
   export type RootStackParamList = {
     Onboarding: undefined;
     Tabs: undefined;
-    MarketDetail: { id: string };
     EasyBuySell: undefined;
   };
 
@@ -34,7 +33,6 @@ export type IconProps = {
 
   export type MarketStackParamList = {
     Markets: undefined;
-    MarketDetail: { id: string };
   };
 
   export type Currency = {

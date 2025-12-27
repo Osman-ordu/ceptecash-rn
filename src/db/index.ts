@@ -38,10 +38,10 @@ export const portfolioAnalysis = {
   };
 
   export const portfolioDistribution = [
-    { coin: 'BTC', percentage: 45, color: '#F7931A', value: 56452.84 },
-    { coin: 'ETH', percentage: 30, color: '#627EEA', value: 37635.23 },
-    { coin: 'BNB', percentage: 15, color: '#F3BA2F', value: 18817.61 },
-    { coin: 'SOL', percentage: 10, color: '#9945FF', value: 12545.07 },
+    { coin: 'Gram Altın', percentage: 45, color: '#F7931A', value: 56452.84 },
+    { coin: 'Gümüş', percentage: 30, color: '#627EEA', value: 37635.23 },
+    { coin: 'Dolar', percentage: 15, color: '#F3BA2F', value: 18817.61 },
+    { coin: 'Euro', percentage: 10, color: '#9945FF', value: 12545.07 },
   ];
 
   export const portfolioData = {
@@ -52,13 +52,13 @@ export const portfolioAnalysis = {
 
   export const todayPerformance = {
     topGainer: {
-      coin: 'BTC',
+      coin: 'Gram Altın',
       change: 5.2,
       value: 1250.50,
       icon: BTCIcon,
     },
     topLoser: {
-      coin: 'ETH',
+      coin: 'Gümüş',
       change: -3.8,
       value: -850.25,
       icon: ETHIcon,
