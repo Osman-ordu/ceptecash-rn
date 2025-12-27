@@ -6,8 +6,8 @@ export const styles = StyleSheet.create({
   },
   tableHeader: {
     flexDirection: 'row',
-    paddingVertical: 8,
-    paddingHorizontal: 8,
+    paddingVertical: 4,
+    paddingHorizontal: 4,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(0, 0, 0, 0.1)',
     marginBottom: 6,
@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
     flex: 0.5,
   },
   headerText: {
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: '500',
     opacity: 0.5,
     textTransform: 'uppercase',
@@ -47,7 +47,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 4,
   },
   cellText: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '600',
     opacity: 0.9,
     lineHeight: 18,

@@ -5,13 +5,14 @@ import { ThemedView } from '@/components/ui/themed-view';
 import { styles } from './styles';
 
 export interface Column {
-  dataField: string;
+  dataField: string | string[];
   caption: string;
   addition?: {
     allowSorting?: boolean;
     width?: number | string;
     align?: 'left' | 'center' | 'right';
     renderCell?: (value: any, row: any, index: number) => React.ReactNode;
+    separator?: string; // Birden fazla dataField için ayırıcı (varsayılan: ' ')
   };
 }
 
@@ -48,10 +49,11 @@ export function CustomGrid({
         {columns.map((column, index) => {
           const columnWidth = column.addition?.width || 'auto';
           const align = column.addition?.align || 'center';
+          const columnKey = getColumnKey(column);
           
           return (
             <View
-              key={`${gridKey}-header-${column.dataField}-${index}`}
+              key={`${gridKey}-header-${columnKey}-${index}`}
               style={[
                 styles.headerCell,
                 typeof columnWidth === 'number' ? { width: columnWidth } : { flex: 1 },
@@ -72,14 +74,47 @@ export function CustomGrid({
     );
   };
 
+  const parseDataField = (dataField: string | string[]): string[] => {
+    if (Array.isArray(dataField)) {
+      return dataField;
+    }
+    // String formatını destekle: 'total + baseAsset' -> ['total', 'baseAsset']
+    if (typeof dataField === 'string' && (dataField.includes(' + ') || dataField.includes('+'))) {
+      return dataField.split(/\s*\+\s*/).map(field => field.trim()).filter(Boolean);
+    }
+    return [dataField];
+  };
+
+  const getCellValue = (column: Column, row: any): any => {
+    const fields = parseDataField(column.dataField);
+    
+    if (fields.length > 1) {
+      const separator = column.addition?.separator || ' ';
+      return fields
+        .map((field) => {
+          const fieldValue = row[field];
+          return fieldValue !== null && fieldValue !== undefined ? String(fieldValue) : '';
+        })
+        .filter(Boolean)
+        .join(separator);
+    }
+    return row[fields[0]];
+  };
+
+  const getColumnKey = (column: Column): string => {
+    const fields = parseDataField(column.dataField);
+    return fields.join('-');
+  };
+
   const renderCell = (column: Column, value: any, row: any, rowIndex: number) => {
     const columnWidth = column.addition?.width || 'auto';
     const align = column.addition?.align || 'center';
+    const columnKey = getColumnKey(column);
 
     if (column.addition?.renderCell) {
       return (
         <View
-          key={`${gridKey}-cell-${column.dataField}-${rowIndex}`}
+          key={`${gridKey}-cell-${columnKey}-${rowIndex}`}
           style={[
             styles.tableCell,
             typeof columnWidth === 'number' ? { width: columnWidth } : { flex: 1 },
@@ -96,7 +131,7 @@ export function CustomGrid({
     // Default render
     return (
       <View
-        key={`${gridKey}-cell-${column.dataField}-${rowIndex}`}
+        key={`${gridKey}-cell-${columnKey}-${rowIndex}`}
         style={[
           styles.tableCell,
           typeof columnWidth === 'number' ? { width: columnWidth } : { flex: 1 },
@@ -119,7 +154,7 @@ export function CustomGrid({
         style={[styles.tableRow, index === data.length - 1 && styles.tableRowNoBorder, rowStyle]}
       >
         {columns.map((column) => {
-          const value = item[column.dataField];
+          const value = getCellValue(column, item);
           return renderCell(column, value, item, index);
         })}
         {renderRowActions && (
