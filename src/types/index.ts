@@ -27,7 +27,7 @@ export type IconProps = {
 
   export type TabParamList = {
     Home: undefined;
-    Market: undefined;
+    Transactions: undefined;
     Portfolio: undefined;
     Profile: undefined;
   };

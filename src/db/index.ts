@@ -156,3 +156,8 @@ export const portfolioAnalysis = {
       iconComponent: SOLIcon,
     },
   ];
+
+  export const allowedEndpoints: Set<string> = new Set([
+    '/latest/USDT',
+    '/latest/USDC'
+  ]);

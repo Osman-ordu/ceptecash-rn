@@ -5,9 +5,9 @@ import { useTheme } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemedText } from '@/components/ui';
 import { useTheme as useAppTheme } from '@/contexts/ThemeContext';
-import { HomeScreen } from '@/feautures/home';
 import { PortfolioScreen } from '@/feautures/portfolio';
 import { ProfileScreen } from '@/feautures/profile';
+import { TransactionsScreen } from '@/feautures/transactions';
 import { TabParamList } from '@/types';
 import MarketStack from './stacks/MarketStack';
 
@@ -69,10 +69,12 @@ function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
           });
         };
 
-        let iconName: keyof typeof Ionicons.glyphMap = 'home-outline';
+        let iconName: keyof typeof Ionicons.glyphMap = 'swap-horizontal-outline';
         if (route.name === 'Home') {
-          iconName = isFocused ? 'home' : 'home-outline';
-        } else if (route.name === 'Market') {
+          // İşlemler tab'ı için ikon
+          iconName = isFocused ? 'swap-horizontal' : 'swap-horizontal-outline';
+        } else if (route.name === 'Transactions') {
+          // Piyasalar tab'ı için ikon
           iconName = isFocused ? 'trending-up' : 'trending-up-outline';
         } else if (route.name === 'Portfolio') {
           iconName = isFocused ? 'pie-chart' : 'pie-chart-outline';
@@ -152,10 +154,26 @@ export default function TabNavigator() {
       screenOptions={{ headerShown: false }}
       tabBar={(props) => <CustomTabBar {...props} />}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Market" component={MarketStack} />
-      <Tab.Screen name="Portfolio" component={PortfolioScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen 
+        name="Transactions" 
+        component={MarketStack}
+        options={{ title: 'Piyasalar' }}
+      />
+      <Tab.Screen 
+        name="Home" 
+        component={TransactionsScreen}
+        options={{ title: 'İşlemler' }}
+      />
+      <Tab.Screen 
+        name="Portfolio" 
+        component={PortfolioScreen}
+        options={{ title: 'Portföy' }}
+      />
+      <Tab.Screen 
+        name="Profile" 
+        component={ProfileScreen}
+        options={{ title: 'Profil' }}
+      />
     </Tab.Navigator>
   );
 }
