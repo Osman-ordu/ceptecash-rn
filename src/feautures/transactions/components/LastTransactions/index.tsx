@@ -9,7 +9,6 @@ import { useEffect } from 'react';
 import { RootState } from '@/store/store';
 import { styles } from './styles';
 
-
 export default function QuickTransactions() {
   const dispatch = useAppDispatch();
   const quickTransactions = useAppSelector((state: RootState) => state.quickTransaction?.data?.data);
@@ -28,6 +27,16 @@ export default function QuickTransactions() {
         data={quickTransactions || []}
         columns={quickTransactionColumns}
         renderRowActions={undefined}
+        tab={true}
+        tabConfig={{
+          type: 'side',
+          tabs: [
+            { value: 'buy', label: 'Alınan' },
+            { value: 'sell', label: 'Satılan' },
+          ],
+          defaultTab: 'buy',
+        }}
+        emptyMessage="Henüz işlem bulunmamaktadır"
       />
     </ThemedView>
   );

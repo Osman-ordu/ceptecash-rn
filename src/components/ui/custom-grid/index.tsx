@@ -1,7 +1,8 @@
-import React from 'react';
-import { View, FlatList, ActivityIndicator } from 'react-native';
+import React, { useState, useMemo } from 'react';
+import { View, FlatList, ActivityIndicator, Pressable } from 'react-native';
 import { ThemedText } from '@/components/ui/themed-text';
 import { ThemedView } from '@/components/ui/themed-view';
+import { EmptyState } from '@/components/ui/empty-state';
 import { styles } from './styles';
 
 export interface Column {
@@ -16,7 +17,16 @@ export interface Column {
   };
 }
 
-export interface CustomGridProps {
+export interface TabConfig {
+  type: string; // Tab type field name in data (e.g., 'side', 'status')
+  tabs: Array<{
+    value: string; // Tab value to filter (e.g., 'buy', 'sell')
+    label: string; // Tab display label (e.g., 'Alınan', 'Satılan')
+  }>;
+  defaultTab?: string; // Default active tab value
+}
+
+type CustomGridPropsBase = {
   gridKey: string;
   data: any[];
   columns: Column[];
@@ -28,7 +38,19 @@ export interface CustomGridProps {
   headerStyle?: any;
   rowStyle?: any;
   cellStyle?: any;
-}
+};
+
+type CustomGridPropsWithTab = CustomGridPropsBase & {
+  tab: true;
+  tabConfig: TabConfig;
+};
+
+type CustomGridPropsWithoutTab = CustomGridPropsBase & {
+  tab?: false;
+  tabConfig?: never;
+};
+
+export type CustomGridProps = CustomGridPropsWithTab | CustomGridPropsWithoutTab;
 
 export function CustomGrid({
   gridKey,
@@ -42,7 +64,17 @@ export function CustomGrid({
   headerStyle,
   rowStyle,
   cellStyle,
+  tab,
+  tabConfig,
 }: CustomGridProps) {
+  const [activeTab, setActiveTab] = useState<string>(
+    tab && tabConfig ? (tabConfig.defaultTab || tabConfig.tabs[0]?.value || '') : ''
+  );
+
+  const filteredData = useMemo(() => {
+    if (!tab || !tabConfig || !activeTab) return data;
+    return data.filter((row) => row[tabConfig.type] === activeTab);
+  }, [data, tab, tabConfig, activeTab]);
   const renderHeader = () => {
     return (
       <View style={[styles.tableHeader, headerStyle]}>
@@ -151,7 +183,7 @@ export function CustomGrid({
     return (
       <ThemedView
         card
-        style={[styles.tableRow, index === data.length - 1 && styles.tableRowNoBorder, rowStyle]}
+        style={[styles.tableRow, index === filteredData.length - 1 && styles.tableRowNoBorder, rowStyle]}
       >
         {columns.map((column) => {
           const value = getCellValue(column, item);
@@ -166,6 +198,37 @@ export function CustomGrid({
     );
   };
 
+  const renderTabs = () => {
+    if (!tab || !tabConfig) return null;
+
+    return (
+      <View style={styles.tabsContainer}>
+        {tabConfig.tabs.map((tabItem, index) => {
+          const isActive = activeTab === tabItem.value;
+          const isFirst = index === 0;
+          const isLast = index === tabConfig.tabs.length - 1;
+
+          return (
+            <Pressable
+              key={`${gridKey}-tab-${tabItem.value}`}
+              style={[
+                styles.tab,
+                isActive && styles.activeTab,
+                isFirst && styles.leftTab,
+                isLast && styles.rightTab,
+              ]}
+              onPress={() => setActiveTab(tabItem.value)}
+            >
+              <ThemedText style={[styles.tabText, isActive && styles.activeTabText]}>
+                {tabItem.label}
+              </ThemedText>
+            </Pressable>
+          );
+        })}
+      </View>
+    );
+  };
+
   const renderEmpty = () => {
     if (loading) {
       return (
@@ -176,18 +239,15 @@ export function CustomGrid({
       );
     }
 
-    return (
-      <View style={styles.emptyContainer}>
-        <ThemedText style={styles.emptyText}>{emptyMessage}</ThemedText>
-      </View>
-    );
+    return <EmptyState message={emptyMessage} />;
   };
 
   return (
     <View style={[styles.container, style]}>
+      {renderTabs()}
       {renderHeader()}
       <FlatList
-        data={data}
+        data={filteredData}
         renderItem={renderRow}
         keyExtractor={(item, index) => `${gridKey}-row-${index}`}
         ListEmptyComponent={renderEmpty}

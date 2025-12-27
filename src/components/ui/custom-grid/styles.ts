@@ -83,5 +83,39 @@ export const styles = StyleSheet.create({
     opacity: 0.6,
     fontWeight: '500',
   },
+  tabsContainer: {
+    flexDirection: 'row',
+    borderRadius: 12,
+    backgroundColor: 'rgba(0, 0, 0, 0.02)',
+    padding: 4,
+    marginBottom: 16,
+  },
+  tab: {
+    flex: 1,
+    paddingVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  leftTab: {
+    borderTopLeftRadius: 8,
+    borderBottomLeftRadius: 8,
+  },
+  rightTab: {
+    borderTopRightRadius: 8,
+    borderBottomRightRadius: 8,
+  },
+  activeTab: {
+    backgroundColor: '#22C55E',
+  },
+  tabText: {
+    fontSize: 14,
+    fontWeight: '500',
+    opacity: 0.7,
+  },
+  activeTabText: {
+    color: '#FFFFFF',
+    opacity: 1,
+    fontWeight: '600',
+  },
 });
 
