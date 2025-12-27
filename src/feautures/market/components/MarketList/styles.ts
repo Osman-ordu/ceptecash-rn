@@ -88,6 +88,11 @@ export const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-start',
   },
+  cellText: {
+    fontSize: 10,
+    fontWeight: '600',
+    lineHeight: 18,
+  },
   currencyRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -120,7 +125,7 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   resultAmount: {
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: '600',
     opacity: 0.9,
     lineHeight: 18,
