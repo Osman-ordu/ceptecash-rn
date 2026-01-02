@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 16,
-    paddingBottom: 16,
+    paddingBottom: 8,
   },
   card: {
     borderRadius: 16,
@@ -98,7 +98,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
     flex: 1,
-    minWidth: 0, // Text truncation için gerekli
+    minWidth: 0,
   },
   currencyIconContainer: {
     width: 32,

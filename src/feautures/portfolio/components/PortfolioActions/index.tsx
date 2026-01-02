@@ -6,9 +6,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { Button } from '@/components/ui/button';
 import { ThemedText } from '@/components/ui/themed-text';
 import { ThemedView } from '@/components/ui/themed-view';
+import { SemanticColors } from '@/theme';
 import { RootStackParamList } from '@/types';
 import { styles } from './styles';
-import { SemanticColors } from '@/theme';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 

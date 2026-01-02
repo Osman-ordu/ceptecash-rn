@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { createTransactionSchema, type CreateTransactionFormData } from '../validation';
 import { CURRENCIES } from '@/feautures/market/constants';
+import { createTransactionSchema } from '../validation';
 
 interface UseTransactionFormProps {
   socketCurrencies: Record<string, { buyPrice: number }>;

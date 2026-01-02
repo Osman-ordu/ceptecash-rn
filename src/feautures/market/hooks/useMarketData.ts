@@ -1,34 +1,37 @@
 import { useMemo } from 'react';
+import { CurrencyData } from '@/hooks/use-currency-socket';
+import { formatTimeString } from '@/utils/general';
 import { CURRENCIES, CURRENCIES_NAMES, DUMMY_QUICK_TRANSACTIONS } from '../constants';
 
 interface UseMarketDataProps {
-  socketCurrencies: Record<string, { buyPrice: number; timestamp: number }>;
+  socketCurrencies: Record<string, CurrencyData>;
   isConnected: boolean;
 }
 
 export function useMarketData({ socketCurrencies, isConnected }: UseMarketDataProps) {
   const currencyData = useMemo(() => {
     if (!isConnected) return [];
-    
+
     return CURRENCIES.map((currency) => {
       const socketCurrency = socketCurrencies[currency];
-      const tryRate = socketCurrency?.buyPrice;
-      
-      if (!tryRate) return null;
-      
+      const buyPrice = socketCurrency?.buyPrice;
+      const sellPrice = socketCurrency?.sellPrice;
+      const changePercent = socketCurrency?.changePercent || 0;
+
+      if (!buyPrice || !sellPrice) return null;
+
       const timestamp = socketCurrency?.timestamp || Date.now();
-      const updateTime = new Date(timestamp);
-      const timeString = updateTime.toLocaleTimeString('tr-TR', { 
-        hour: '2-digit', 
-        minute: '2-digit',
-        second: '2-digit'
-      });
+      const time = formatTimeString(timestamp);
 
       return {
         currency,
         currencyName: CURRENCIES_NAMES[currency as keyof typeof CURRENCIES_NAMES] || currency,
-        tryRate,
-        time: timeString,
+        tryRate: buyPrice,
+        buyPrice,
+        sellPrice,
+        changePercent,
+        time,
+        timestamp,
       };
     }).filter(Boolean);
   }, [socketCurrencies, isConnected]);

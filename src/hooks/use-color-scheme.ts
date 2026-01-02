@@ -1,11 +1,14 @@
+import { useContext } from 'react';
 import { useColorScheme as useRNColorScheme } from 'react-native';
-import { useTheme } from '@/contexts/ThemeContext';
+import { ThemeContext, ThemeContextType } from '@/contexts/ThemeContext';
 
 export function useColorScheme() {
-  try {
-    const { colorScheme } = useTheme();
-    return colorScheme;
-  } catch {
-    return useRNColorScheme() ?? 'light';
+  const themeContext = useContext(ThemeContext) as ThemeContextType | undefined;
+  const rnColorScheme = useRNColorScheme();
+
+  if (themeContext) {
+    return themeContext.colorScheme;
   }
+
+  return rnColorScheme ?? 'light';
 }

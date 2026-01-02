@@ -1,4 +1,4 @@
-import { createSlice, AsyncThunk } from '@reduxjs/toolkit';
+import { AsyncThunk,createSlice } from '@reduxjs/toolkit';
 import { castDraft } from 'immer';
 
 export interface BaseState<T> {

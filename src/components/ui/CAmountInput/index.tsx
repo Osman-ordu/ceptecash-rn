@@ -1,8 +1,8 @@
 import React from 'react';
 import { TextInput } from 'react-native';
-import { Controller, Control, FieldErrors } from 'react-hook-form';
-import { ThemedText } from '../themed-text';
+import { Control, Controller, FieldErrors } from 'react-hook-form';
 import { cleanNumericInput } from '@/utils';
+import { ThemedText } from '../themed-text';
 import { styles } from './styles';
 
 interface AmountInputProps {

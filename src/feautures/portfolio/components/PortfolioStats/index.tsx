@@ -4,8 +4,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { ThemedText } from '@/components/ui/themed-text';
 import { ThemedView } from '@/components/ui/themed-view';
 import { portfolioDistribution } from '@/db';
+import { CurrencyColors,SemanticColors } from '@/theme';
 import { styles } from './styles';
-import { SemanticColors, CurrencyColors } from '@/theme';
 
 export function PortfolioStats() {
   return (

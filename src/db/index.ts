@@ -1,7 +1,23 @@
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { ADAIcon, BNBIcon, BTCIcon, DOGEIcon, ETHIcon, SOLIcon, XRPIcon } from '@/assets/icons';
-import { PopularCoin, Slide, TrendingCoin } from '@/types';
+import { CURRENCIES_NAMES } from '@/feautures/market/constants';
+import { Currency,PopularCoin, Slide, TrendingCoin  } from '@/types';
+
+export type NavItem = {
+  name: string;
+  route: string;
+  label: string;
+  icon: keyof typeof Ionicons.glyphMap;
+  iconActive: keyof typeof Ionicons.glyphMap;
+};
+
+export const navItems: NavItem[] = [
+  { name: 'index', route: '/(tabs)/', label: 'Home', icon: 'home-outline', iconActive: 'home' },
+  { name: 'markets', route: '/(tabs)/markets', label: 'Markets', icon: 'trending-up-outline', iconActive: 'trending-up' },
+  { name: 'watchlist', route: '/(tabs)/watchlist', label: 'Watchlist', icon: 'star-outline', iconActive: 'star' },
+  { name: 'alerts', route: '/(tabs)/alerts', label: 'Alerts', icon: 'notifications-outline', iconActive: 'notifications' },
+];
 
 export const currencies = [
   { id: '1', symbol: 'BTC', name: 'Bitcoin' },
@@ -25,6 +41,20 @@ export const popularCoins: PopularCoin[] = [
     // Diğer coin icon'ları eklendikçe buraya eklenecek
     // { id: '8', symbol: 'DOT', pair: 'DOT/TRY', change: -0.8, iconComponent: DOTIcon },
   ];
+
+  // Döviz/Altın listesi
+export const currencyList: Currency[] = [
+  { symbol: 'USD', name: CURRENCIES_NAMES.USD },
+  { symbol: 'EUR', name: CURRENCIES_NAMES.EUR },
+  { symbol: 'GRAM', name: CURRENCIES_NAMES.GRAM },
+  { symbol: 'CEYREK', name: CURRENCIES_NAMES.CEYREK },
+  { symbol: 'YARIM', name: CURRENCIES_NAMES.YARIM },
+  { symbol: 'ATA', name: CURRENCIES_NAMES.ATA },
+  { symbol: 'AYAR22', name: CURRENCIES_NAMES.AYAR22 },
+  { symbol: 'AYAR14', name: CURRENCIES_NAMES.AYAR14 },
+  { symbol: 'GUMUSTRY', name: CURRENCIES_NAMES.GUMUSTRY },
+  { symbol: 'TRY', name: 'Türk Lirası' },
+];
 
   // Dummy analysis data
 export const portfolioAnalysis = {
@@ -161,3 +191,19 @@ export const portfolioAnalysis = {
     '/latest/USDT',
     '/latest/USDC'
   ]);
+
+  export const DISPLAY_CURRENCIES = ['USD', 'EUR', 'AYAR14', 'AYAR22', 'GRAM', 'CEYREK', 'YARIM', 'ATA'];
+
+  export const CURRENCY_WIDTH = 140;
+export const SCROLL_SPEED = 50;
+
+export const CURRENCY_LABELS: Record<string, string> = {
+  USD: 'Dolar',
+  EUR: 'Euro',
+  AYAR22: '22 Ayar Altın',
+  AYAR14: '14 Ayar Altın',
+  GRAM: 'Gram Altın',
+  CEYREK: 'Çeyrek Altın',
+  YARIM: 'Yarım Altın',
+  ATA: 'Ata Lira',
+};

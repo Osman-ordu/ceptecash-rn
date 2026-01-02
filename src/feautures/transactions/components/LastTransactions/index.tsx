@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { CustomGrid } from '@/components/ui';
 import { ThemedText } from '@/components/ui/themed-text';
 import { ThemedView } from '@/components/ui/themed-view';
-import { CustomGrid } from '@/components/ui';
 import { quickTransactionColumns } from '@/db/columns/quickTransactionColumns';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getQuickTransaction } from '@/store/quickTransactions';
-import { useEffect } from 'react';
 import { RootState } from '@/store/store';
 import { styles } from './styles';
 
@@ -41,5 +40,4 @@ export default function QuickTransactions() {
     </ThemedView>
   );
 }
-
 

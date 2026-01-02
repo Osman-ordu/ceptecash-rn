@@ -1,14 +1,14 @@
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 import { EasyBuySellScreen } from '@/feautures/easyBuySell';
-import { OnboardingScreen } from '@/feautures/onboarding';
 import { MarketScreen } from '@/feautures/market';
-import { TransactionsScreen } from '@/feautures/transactions';
+import { OnboardingScreen } from '@/feautures/onboarding';
 import { PortfolioScreen } from '@/feautures/portfolio';
 import { ProfileScreen } from '@/feautures/profile';
-import { RootStackParamList, TabParamList, MarketStackParamList } from './types';
+import { TransactionsScreen } from '@/feautures/transactions';
+import { MarketStackParamList,RootStackParamList, TabParamList } from './types';
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -27,40 +27,40 @@ function TabNavigator() {
     <Tab.Navigator
       screenOptions={{ headerShown: false }}
     >
-      <Tab.Screen 
-        name="Market" 
+      <Tab.Screen
+        name="Market"
         component={MarketStackNavigator}
-        options={{ 
+        options={{
           title: 'Piyasalar',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="trending-up" size={size} color={color} />
           ),
         }}
       />
-      <Tab.Screen 
-        name="Transactions" 
+      <Tab.Screen
+        name="Transactions"
         component={TransactionsScreen}
-        options={{ 
+        options={{
           title: 'İşlemler',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="swap-horizontal" size={size} color={color} />
           ),
         }}
       />
-      <Tab.Screen 
-        name="Portfolio" 
+      <Tab.Screen
+        name="Portfolio"
         component={PortfolioScreen}
-        options={{ 
+        options={{
           title: 'Portföy',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="pie-chart" size={size} color={color} />
           ),
         }}
       />
-      <Tab.Screen 
-        name="Profile" 
+      <Tab.Screen
+        name="Profile"
         component={ProfileScreen}
-        options={{ 
+        options={{
           title: 'Profil',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person" size={size} color={color} />

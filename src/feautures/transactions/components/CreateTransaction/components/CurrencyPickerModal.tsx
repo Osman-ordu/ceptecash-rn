@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, Pressable, ScrollView, Modal } from 'react-native';
+import { Modal,Pressable, ScrollView, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { ThemedView } from '@/components/ui/themed-view';
 import { ThemedText } from '@/components/ui/themed-text';
+import { ThemedView } from '@/components/ui/themed-view';
 import { CURRENCIES_NAMES } from '@/feautures/market/constants';
 import { useThemeColor } from '@/hooks/use-theme-color';
-import { styles, getModalStyles } from './styles';
+import { getModalStyles,styles } from './styles';
 
 interface CurrencyPickerModalProps {
   visible: boolean;

@@ -4,8 +4,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { ThemedText } from '@/components/ui/themed-text';
 import { ThemedView } from '@/components/ui/themed-view';
 import { useTheme } from '@/contexts/ThemeContext';
+import { IconColors,SemanticColors } from '@/theme';
 import { styles } from './styles';
-import { SemanticColors, IconColors } from '@/theme';
 
 type SettingItem = {
   id: string;

@@ -1,12 +1,12 @@
 import React from 'react';
-import { View, TextInput, Pressable, Modal, ScrollView } from 'react-native';
+import { Modal, Pressable, ScrollView,TextInput, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { Button } from '@/components/ui/button';
 import { ThemedText } from '@/components/ui/themed-text';
 import { ThemedView } from '@/components/ui/themed-view';
-import { Button } from '@/components/ui/button';
+import { CURRENCIES_NAMES } from '@/feautures/market/constants';
 import { useThemeColor } from '@/hooks/use-theme-color';
 import { cleanNumericInput } from '@/utils';
-import { CURRENCIES_NAMES } from '@/feautures/market/constants';
 import { styles } from './styles';
 
 interface AddCurrencyModalProps {

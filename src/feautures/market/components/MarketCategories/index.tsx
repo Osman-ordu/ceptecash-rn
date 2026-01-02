@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Pressable,ScrollView, View } from 'react-native';
+import { Pressable,ScrollView } from 'react-native';
 import { ThemedText } from '@/components/ui/themed-text';
 import { ThemedView } from '@/components/ui/themed-view';
 import { styles } from './styles';

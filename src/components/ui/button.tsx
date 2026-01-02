@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, StyleSheet, TextStyle,TouchableOpacity, ViewStyle } from 'react-native';
+import { ActivityIndicator, TextStyle,TouchableOpacity, ViewStyle } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -7,9 +7,8 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import { Colors } from '@/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useThemeColor } from '@/hooks/use-theme-color';
+import { Colors } from '@/theme';
 import { ThemedText } from './themed-text';
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
@@ -37,7 +36,6 @@ export function Button({
   textStyle,
   animated = true,
 }: ButtonProps) {
-  const colorScheme = useColorScheme();
   const scale = useSharedValue(1);
   const opacity = useSharedValue(1);
 

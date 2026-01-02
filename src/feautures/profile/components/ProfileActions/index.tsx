@@ -3,8 +3,8 @@ import { Alert,Pressable, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemedText } from '@/components/ui/themed-text';
 import { ThemedView } from '@/components/ui/themed-view';
-import { styles } from './styles';
 import { SemanticColors } from '@/theme';
+import { styles } from './styles';
 
 export function ProfileActions() {
   const handleLogout = () => {

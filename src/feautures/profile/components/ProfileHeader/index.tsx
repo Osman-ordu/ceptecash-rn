@@ -3,8 +3,8 @@ import { View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemedText } from '@/components/ui/themed-text';
 import { ThemedView } from '@/components/ui/themed-view';
-import { styles } from './styles';
 import { IconColors } from '@/theme';
+import { styles } from './styles';
 
 export function ProfileHeader() {
   return (

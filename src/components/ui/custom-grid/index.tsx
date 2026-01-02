@@ -1,8 +1,8 @@
-import React, { useState, useMemo } from 'react';
-import { View, FlatList, ActivityIndicator, Pressable } from 'react-native';
+import React, { useMemo,useState } from 'react';
+import { ActivityIndicator, FlatList, Pressable,View } from 'react-native';
+import { EmptyState } from '@/components/ui/empty-state';
 import { ThemedText } from '@/components/ui/themed-text';
 import { ThemedView } from '@/components/ui/themed-view';
-import { EmptyState } from '@/components/ui/empty-state';
 import { styles } from './styles';
 
 export interface Column {
@@ -19,10 +19,10 @@ export interface Column {
 
 export interface TabConfig {
   type: string; // Tab type field name in data (e.g., 'side', 'status')
-  tabs: Array<{
+  tabs: {
     value: string; // Tab value to filter (e.g., 'buy', 'sell')
     label: string; // Tab display label (e.g., 'Alınan', 'Satılan')
-  }>;
+  }[];
   defaultTab?: string; // Default active tab value
 }
 
@@ -82,7 +82,7 @@ export function CustomGrid({
           const columnWidth = column.addition?.width || 'auto';
           const align = column.addition?.align || 'center';
           const columnKey = getColumnKey(column);
-          
+
           return (
             <View
               key={`${gridKey}-header-${columnKey}-${index}`}
@@ -119,7 +119,7 @@ export function CustomGrid({
 
   const getCellValue = (column: Column, row: any): any => {
     const fields = parseDataField(column.dataField);
-    
+
     if (fields.length > 1) {
       const separator = column.addition?.separator || ' ';
       return fields

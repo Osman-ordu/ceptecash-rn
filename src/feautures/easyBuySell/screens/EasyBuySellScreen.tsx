@@ -1,50 +1,32 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo,useState } from 'react';
 import { Alert, Modal, Pressable, ScrollView, TextInput, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
+import { AppLogo, useAppLogoHeight } from '@/components/layout';
 import { Button } from '@/components/ui/button';
 import { ThemedText } from '@/components/ui/themed-text';
 import { ThemedView } from '@/components/ui/themed-view';
-import { AppLogo, useAppLogoHeight } from '@/components/layout';
-import { useThemeColor } from '@/hooks/use-theme-color';
-import { SemanticColors } from '@/theme';
+import { currencyList } from '@/db';
 import { useCurrencySocket } from '@/hooks/use-currency-socket';
-import { CURRENCIES, CURRENCIES_NAMES, getCurrencyColor } from '@/feautures/market/constants';
+import { useThemeColor } from '@/hooks/use-theme-color';
+import { RootStackParamList } from '@/navigation/types';
+import { SemanticColors } from '@/theme';
+import { ICurrency, TabType } from '@/types';
 import { cleanNumericInput } from '@/utils';
-import { RootStackParamList, TabType } from '@/types';
 import { styles } from './EasyBuySellScreen.styles';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'EasyBuySell'>;
 
-interface Currency {
-  symbol: string;
-  name: string;
-}
-
-// Döviz/Altın listesi
-const currencyList: Currency[] = [
-  { symbol: 'USD', name: CURRENCIES_NAMES.USD },
-  { symbol: 'EUR', name: CURRENCIES_NAMES.EUR },
-  { symbol: 'GRAM', name: CURRENCIES_NAMES.GRAM },
-  { symbol: 'CEYREK', name: CURRENCIES_NAMES.CEYREK },
-  { symbol: 'YARIM', name: CURRENCIES_NAMES.YARIM },
-  { symbol: 'ATA', name: CURRENCIES_NAMES.ATA },
-  { symbol: 'AYAR22', name: CURRENCIES_NAMES.AYAR22 },
-  { symbol: 'AYAR14', name: CURRENCIES_NAMES.AYAR14 },
-  { symbol: 'GUMUSTRY', name: CURRENCIES_NAMES.GUMUSTRY },
-  { symbol: 'TRY', name: 'Türk Lirası' },
-];
-
 export default function EasyBuySellScreen({ navigation }: Props) {
   const textColor = useThemeColor({}, 'text');
   const backgroundColor = useThemeColor({}, 'background');
-  
+
   const logoHeight = 60;
   const totalHeaderHeight = useAppLogoHeight(logoHeight);
-  
+
   const [activeTab, setActiveTab] = useState<TabType>('buy');
-  const [fromCurrency, setFromCurrency] = useState<Currency>(currencyList[0]); // USD
-  const [toCurrency, setToCurrency] = useState<Currency>(currencyList[9]); // TRY
+  const [fromCurrency, setFromCurrency] = useState<ICurrency>(currencyList[0]);
+  const [toCurrency, setToCurrency] = useState<ICurrency>(currencyList[9]);
   const [fromAmount, setFromAmount] = useState('');
   const [toAmount, setToAmount] = useState('');
   const [showFromPicker, setShowFromPicker] = useState(false);
@@ -52,38 +34,30 @@ export default function EasyBuySellScreen({ navigation }: Props) {
 
   const { currencies: socketCurrencies, isConnected } = useCurrencySocket();
 
-  // Gerçek zamanlı fiyat hesaplama
   const exchangeRate = useMemo(() => {
     if (!isConnected || !fromCurrency || !toCurrency) return 0;
 
-    // TRY'den başka bir dövize çevirme
     if (fromCurrency.symbol === 'TRY') {
       const toData = socketCurrencies[toCurrency.symbol];
       if (!toData) return 0;
-      // TRY'yi dövize çevirmek için satış fiyatını kullan (TRY verdiğimiz için döviz alıyoruz)
       return 1 / toData.sellPrice;
     }
 
-    // Başka bir dövizden TRY'ye çevirme
     if (toCurrency.symbol === 'TRY') {
       const fromData = socketCurrencies[fromCurrency.symbol];
       if (!fromData) return 0;
-      // Dövizi TRY'ye çevirmek için alış fiyatını kullan (döviz verdiğimiz için TRY alıyoruz)
       return fromData.buyPrice;
     }
 
-    // İki döviz arası çevirme (TRY üzerinden)
     const fromData = socketCurrencies[fromCurrency.symbol];
     const toData = socketCurrencies[toCurrency.symbol];
     if (!fromData || !toData) return 0;
-    
-    // Önce fromCurrency'yi TRY'ye çevir, sonra TRY'yi toCurrency'ye çevir
-    const fromToTry = fromData.buyPrice; // Döviz -> TRY (alış)
-    const tryToTo = 1 / toData.sellPrice; // TRY -> Döviz (satış)
+
+    const fromToTry = fromData.buyPrice;
+    const tryToTo = 1 / toData.sellPrice;
     return fromToTry * tryToTo;
   }, [fromCurrency, toCurrency, socketCurrencies, isConnected]);
 
-  // Miktar değiştiğinde otomatik hesaplama
   useEffect(() => {
     if (fromAmount && exchangeRate > 0) {
       const calculated = parseFloat(fromAmount) * exchangeRate;
@@ -93,7 +67,7 @@ export default function EasyBuySellScreen({ navigation }: Props) {
     }
   }, [fromAmount, exchangeRate]);
 
-  const handleFromCurrencyChange = (currency: Currency) => {
+  const handleFromCurrencyChange = (currency: ICurrency) => {
     setFromCurrency(currency);
     setShowFromPicker(false);
     if (currency.symbol === toCurrency.symbol) {
@@ -104,7 +78,7 @@ export default function EasyBuySellScreen({ navigation }: Props) {
     setToAmount('');
   };
 
-  const handleToCurrencyChange = (currency: Currency) => {
+  const handleToCurrencyChange = (currency: ICurrency) => {
     setToCurrency(currency);
     setShowToPicker(false);
     if (currency.symbol === fromCurrency.symbol) {
@@ -118,15 +92,12 @@ export default function EasyBuySellScreen({ navigation }: Props) {
   const handleTabChange = (tab: TabType) => {
     if (tab !== activeTab) {
       setActiveTab(tab);
-      // Tab değiştiğinde para birimlerini değiştir
       if (tab === 'buy') {
-        // Al: Döviz -> TRY
-        setFromCurrency(currencyList[0]); // USD
-        setToCurrency(currencyList[9]); // TRY
+        setFromCurrency(currencyList[0]);
+        setToCurrency(currencyList[9]);
       } else {
-        // Sat: TRY -> Döviz
-        setFromCurrency(currencyList[9]); // TRY
-        setToCurrency(currencyList[0]); // USD
+        setFromCurrency(currencyList[9]);
+        setToCurrency(currencyList[0]);
       }
       setFromAmount('');
       setToAmount('');
@@ -153,7 +124,7 @@ export default function EasyBuySellScreen({ navigation }: Props) {
         {
           text: 'Tamam',
           onPress: () => {
-            // TODO: Navigate to login/register screen
+            void navigation.navigate('Login' as keyof RootStackParamList);
           },
         },
       ]
@@ -181,7 +152,6 @@ export default function EasyBuySellScreen({ navigation }: Props) {
         showsVerticalScrollIndicator={false}
       >
         <ThemedView style={styles.card}>
-          {/* Tabs */}
           <View style={styles.tabsContainer}>
             <Pressable
               style={[styles.tab, activeTab === 'buy' && styles.activeTab, styles.leftTab]}
@@ -207,7 +177,6 @@ export default function EasyBuySellScreen({ navigation }: Props) {
             </Pressable>
           </View>
 
-          {/* Bağlantı durumu */}
           {!isConnected && (
             <ThemedView style={styles.connectionStatus}>
               <Ionicons name="warning-outline" size={16} color={SemanticColors.warning} />
@@ -271,7 +240,6 @@ export default function EasyBuySellScreen({ navigation }: Props) {
               <ThemedText style={styles.inputLabel}>{toCurrency.name}</ThemedText>
             </View>
 
-            {/* Kur bilgisi */}
             {exchangeRate > 0 && (
               <ThemedView style={styles.rateInfo}>
                 <ThemedText style={styles.rateText}>

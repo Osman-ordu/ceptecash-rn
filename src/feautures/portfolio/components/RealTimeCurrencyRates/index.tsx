@@ -3,26 +3,11 @@ import { ScrollView, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemedText } from '@/components/ui/themed-text';
 import { ThemedView } from '@/components/ui/themed-view';
-import { useCurrencySocket, CurrencyData } from '@/hooks/use-currency-socket';
-import { styles } from './styles';
-import { useThemeColor } from '@/hooks/use-theme-color';
+import { CURRENCY_LABELS,CURRENCY_WIDTH, DISPLAY_CURRENCIES , SCROLL_SPEED } from '@/db';
+import { useCurrencySocket } from '@/hooks/use-currency-socket';
 import { CurrencyColors, SemanticColors } from '@/theme';
-
-const CURRENCY_WIDTH = 140;
-const SCROLL_SPEED = 50; // pixels per second
-
-const DISPLAY_CURRENCIES = ['USD', 'EUR', 'AYAR14', 'AYAR22', 'GRAM', 'CEYREK', 'YARIM', 'ATA'];
-
-const CURRENCY_LABELS: Record<string, string> = {
-  USD: 'Dolar',
-  EUR: 'Euro',
-  AYAR22: '22 Ayar Altın',
-  AYAR14: '14 Ayar Altın',
-  GRAM: 'Gram Altın',
-  CEYREK: 'Çeyrek Altın',
-  YARIM: 'Yarım Altın',
-  ATA: 'Ata Lira',
-};
+import { ICurrencyData } from '@/types';
+import { styles } from './styles';
 
 const getCurrencyIcon = (symbol: string): keyof typeof Ionicons.glyphMap => {
   const iconMap: Record<string, keyof typeof Ionicons.glyphMap> = {
@@ -56,23 +41,21 @@ export function RealTimeCurrencyRates() {
   const scrollViewRef = useRef<ScrollView>(null);
   const scrollX = useRef(0);
   const { currencies, isConnected } = useCurrencySocket();
-  const textColor = useThemeColor({}, 'text');
-
 
   const displayCurrencies = React.useMemo(() => {
-    
+
     const result = DISPLAY_CURRENCIES.map((symbol) => {
       const currency = currencies[symbol];
       if (currency && currency.buyPrice > 0 && currency.sellPrice > 0) {
         return currency;
       }
       return null;
-    }).filter((currency): currency is CurrencyData => {
+    }).filter((currency): currency is ICurrencyData => {
       if (!currency) return false;
       const hasData = currency.buyPrice > 0 && currency.sellPrice > 0;
       return hasData;
     });
-    
+
     return result;
   }, [currencies]);
 
@@ -129,10 +112,10 @@ export function RealTimeCurrencyRates() {
             <ThemedView key={currency.symbol} card style={styles.currencyItem}>
               <View style={styles.currencyIconContainer}>
                 <View style={[styles.currencyIconPlaceholder, { backgroundColor: getCurrencyColor(currency.symbol) + '20' }]}>
-                  <Ionicons 
-                    name={getCurrencyIcon(currency.symbol)} 
-                    size={24} 
-                    color={getCurrencyColor(currency.symbol)} 
+                  <Ionicons
+                    name={getCurrencyIcon(currency.symbol)}
+                    size={24}
+                    color={getCurrencyColor(currency.symbol)}
                   />
                 </View>
               </View>
@@ -169,7 +152,6 @@ export function RealTimeCurrencyRates() {
             </ThemedView>
           );
         })}
-        {/* Duplicate currencies for seamless loop */}
         {displayCurrencies.map((currency) => {
           const isPositive = currency.changePercent > 0;
           const changeColor = isPositive ? SemanticColors.success : SemanticColors.error;
@@ -179,10 +161,10 @@ export function RealTimeCurrencyRates() {
             <ThemedView key={`${currency.symbol}-duplicate`} card style={styles.currencyItem}>
               <View style={styles.currencyIconContainer}>
                 <View style={[styles.currencyIconPlaceholder, { backgroundColor: getCurrencyColor(currency.symbol) + '20' }]}>
-                  <Ionicons 
-                    name={getCurrencyIcon(currency.symbol)} 
-                    size={24} 
-                    color={getCurrencyColor(currency.symbol)} 
+                  <Ionicons
+                    name={getCurrencyIcon(currency.symbol)}
+                    size={24}
+                    color={getCurrencyColor(currency.symbol)}
                   />
                 </View>
               </View>

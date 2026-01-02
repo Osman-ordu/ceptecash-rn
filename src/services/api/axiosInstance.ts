@@ -11,7 +11,7 @@ axiosInstance.interceptors.request.use(async (config: any) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
-  
+
   // Log request details
   console.log('🚀 [API REQUEST]', {
     method: config.method?.toUpperCase(),
@@ -20,7 +20,7 @@ axiosInstance.interceptors.request.use(async (config: any) => {
     params: config.params,
     data: config.data,
   });
-  
+
   return config;
 });
 

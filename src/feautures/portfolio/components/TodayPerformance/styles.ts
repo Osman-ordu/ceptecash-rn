@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { SemanticColors, OverlayColors } from '@/theme';
+import { OverlayColors,SemanticColors } from '@/theme';
 
 export const styles = StyleSheet.create({
     container: {

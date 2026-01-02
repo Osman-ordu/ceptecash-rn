@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Pressable } from 'react-native';
-import { Controller, Control, FieldErrors } from 'react-hook-form';
+import { Pressable,View } from 'react-native';
+import { Control, Controller, FieldErrors } from 'react-hook-form';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemedText } from '../../themed-text';
 import { styles } from './styles';

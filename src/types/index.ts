@@ -18,7 +18,6 @@ export type IconProps = {
     color?: string;
   };
 
-
   export type Currency = {
     symbol: string;
     name: string;
@@ -48,3 +47,16 @@ export type IconProps = {
     change: number;
     iconComponent: React.ComponentType<IconProps>;
   };
+
+  export interface ICurrency {
+    symbol: string;
+    name: string;
+  }
+
+  export interface ICurrencyData {
+    symbol: string;
+    buyPrice: number;
+    sellPrice: number;
+    changePercent: number;
+    timestamp: number;
+  }

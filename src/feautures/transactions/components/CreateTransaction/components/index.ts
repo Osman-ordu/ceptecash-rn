@@ -1,3 +1,3 @@
-export { CurrencyPickerModal } from './CurrencyPickerModal';
 export { ConnectionStatus } from './ConnectionStatus';
+export { CurrencyPickerModal } from './CurrencyPickerModal';
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { TouchableOpacity, useWindowDimensions, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
@@ -9,27 +9,14 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { usePathname, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemedText } from '@/components/ui/themed-text';
-import { Colors } from '@/theme';
+import { NAVBAR_COLORS } from '@/constants/navbar';
+import { navItems } from '@/db';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useThemeColor } from '@/hooks/use-theme-color';
-import { styles } from './styles';
+import { Colors } from '@/theme';
+import { getDynamicStyles,styles } from './styles';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
-
-type NavItem = {
-  name: string;
-  route: string;
-  label: string;
-  icon: keyof typeof Ionicons.glyphMap;
-  iconActive: keyof typeof Ionicons.glyphMap;
-};
-
-const navItems: NavItem[] = [
-  { name: 'index', route: '/(tabs)/', label: 'Home', icon: 'home-outline', iconActive: 'home' },
-  { name: 'markets', route: '/(tabs)/markets', label: 'Markets', icon: 'trending-up-outline', iconActive: 'trending-up' },
-  { name: 'watchlist', route: '/(tabs)/watchlist', label: 'Watchlist', icon: 'star-outline', iconActive: 'star' },
-  { name: 'alerts', route: '/(tabs)/alerts', label: 'Alerts', icon: 'notifications-outline', iconActive: 'notifications' },
-];
 
 export function Navbar() {
   const router = useRouter();
@@ -42,8 +29,8 @@ export function Navbar() {
   const activeColor = Colors[colorScheme ?? 'light'].tint;
   const inactiveColor = useThemeColor(
     {
-      light: '#1A202C', // Beyaz background üzerinde daha belirgin
-      dark: '#CBD5E0', // Daha belirgin renk
+      light: NAVBAR_COLORS.inactiveIcon.light,
+      dark: NAVBAR_COLORS.inactiveIcon.dark,
     },
     'icon'
   );
@@ -58,7 +45,7 @@ export function Navbar() {
 
   const activeIndex = useSharedValue(getActiveIndex());
 
-  React.useEffect(() => {
+  useEffect(() => {
     activeIndex.value = withSpring(getActiveIndex());
   }, [pathname]);
 
@@ -73,29 +60,24 @@ export function Navbar() {
     router.push(route as any);
   };
 
+  const dynamicStyles = getDynamicStyles();
+
   return (
     <View
       style={[
         styles.container,
-        {
-          backgroundColor,
-          paddingBottom: Math.max(insets.bottom, 8),
-          borderTopColor: colorScheme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.08)',
-        },
+        dynamicStyles.container(backgroundColor, insets.bottom, colorScheme),
       ]}
     >
       <AnimatedView
         style={[
           styles.indicator,
-          {
-            backgroundColor: activeColor,
-            width: width / navItems.length,
-          },
+          dynamicStyles.indicator(activeColor, width / navItems.length),
           indicatorStyle,
         ]}
       />
       <View style={styles.navContainer}>
-        {navItems.map((item, index) => {
+        {navItems.map((item) => {
           let isActive = false;
           if (item.name === 'index') {
             isActive = pathname === '/(tabs)/' || pathname === '/(tabs)';
@@ -114,12 +96,7 @@ export function Navbar() {
             >
               {isActive && (
                 <View
-                  style={[
-                    styles.activeBorder,
-                    {
-                      backgroundColor: activeColor,
-                    },
-                  ]}
+                  style={[styles.activeBorder, dynamicStyles.activeBorder(activeColor)]}
                 />
               )}
               <Ionicons
@@ -129,12 +106,7 @@ export function Navbar() {
                 style={styles.icon}
               />
               <ThemedText
-                style={[
-                  styles.navText,
-                  {
-                    color: itemColor,
-                  },
-                ]}
+                style={[styles.navText, dynamicStyles.navText(itemColor)]}
               >
                 {item.label}
               </ThemedText>

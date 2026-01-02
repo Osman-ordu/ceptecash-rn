@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { ThemedView } from '@/components/ui/themed-view';
-import { ThemedText } from '@/components/ui/themed-text';
+import { AmountInput, CurrencyPairSelector, PriceDisplay } from '@/components/ui';
 import { Button } from '@/components/ui/button';
-import { CurrencyPairSelector, AmountInput, PriceDisplay } from '@/components/ui';
-import { CurrencyPickerModal, ConnectionStatus } from './components';
-import { useThemeColor } from '@/hooks/use-theme-color';
+import { ThemedText } from '@/components/ui/themed-text';
+import { ThemedView } from '@/components/ui/themed-view';
 import { useCurrencySocket } from '@/hooks/use-currency-socket';
+import { useThemeColor } from '@/hooks/use-theme-color';
 import { useAppDispatch } from '@/store/hooks';
 import { getQuickTransaction, postQuickTransaction } from '@/store/quickTransactions';
 import { CreateQuickTransaction } from '@/store/quickTransactions/types';
+import { ConnectionStatus,CurrencyPickerModal } from './components';
 import { useTransactionForm } from './hooks/use-transaction-form';
-import { styles, getDynamicStyles } from './styles';
+import { getDynamicStyles,styles } from './styles';
 
 export default function CreateTransaction() {
   const dispatch = useAppDispatch();

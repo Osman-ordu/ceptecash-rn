@@ -4,13 +4,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type ThemeMode = 'light' | 'dark' | 'system';
 
-interface ThemeContextType {
+export interface ThemeContextType {
   themeMode: ThemeMode;
   colorScheme: 'light' | 'dark';
   setThemeMode: (mode: ThemeMode) => Promise<void>;
 }
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 const THEME_STORAGE_KEY = '@fintrack_theme_mode';
 

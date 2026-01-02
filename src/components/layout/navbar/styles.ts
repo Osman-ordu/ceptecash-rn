@@ -1,4 +1,5 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TextStyle,ViewStyle } from 'react-native';
+import { NAVBAR_COLORS, NAVBAR_CONSTANTS } from '@/constants/navbar';
 
 export const styles = StyleSheet.create({
   container: {
@@ -28,7 +29,6 @@ export const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: 3,
-    backgroundColor: '#22C55E',
   },
   icon: {
     marginBottom: 4,
@@ -42,4 +42,30 @@ export const styles = StyleSheet.create({
     height: 1.5,
     borderRadius: 0.75,
   },
+});
+
+// Dinamik stiller için helper fonksiyonlar
+export const getDynamicStyles = () => ({
+  container: (
+    backgroundColor: string,
+    paddingBottom: number,
+    colorScheme: 'light' | 'dark' | null
+  ): ViewStyle => ({
+    backgroundColor,
+    paddingBottom: Math.max(paddingBottom, NAVBAR_CONSTANTS.minPaddingBottom),
+    borderTopColor:
+      colorScheme === 'dark'
+        ? NAVBAR_COLORS.borderTop.dark
+        : NAVBAR_COLORS.borderTop.light,
+  }),
+  indicator: (backgroundColor: string, width: number): ViewStyle => ({
+    backgroundColor,
+    width,
+  }),
+  activeBorder: (backgroundColor: string): ViewStyle => ({
+    backgroundColor,
+  }),
+  navText: (color: string): TextStyle => ({
+    color,
+  }),
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
-import { ThemedText } from '../themed-text';
 import { useThemeColor } from '@/hooks/use-theme-color';
+import { ThemedText } from '../themed-text';
 import { styles } from './styles';
 
 interface EmptyStateProps {
