@@ -17,6 +17,7 @@ interface CurrencyPairSelectorProps {
     quoteAssetSelector: () => any;
     quoteAssetText: () => any;
   };
+  compact?: boolean;
 }
 
 export function CurrencyPairSelector({
@@ -25,37 +26,48 @@ export function CurrencyPairSelector({
   onBaseAssetPress,
   quoteAsset = 'TRY',
   dynamicStyles,
+  compact = false,
 }: CurrencyPairSelectorProps) {
+  const labelStyle = compact ? [styles.label, { fontSize: 10, marginBottom: 2 }] : styles.label;
+  const containerStyle = compact ? [styles.currencyPairContainer, { gap: 4 }] : styles.currencyPairContainer;
+  const selectorStyle = compact 
+    ? [styles.currencySelector, { paddingVertical: 6, minHeight: 36, paddingHorizontal: 8, borderRadius: 8 }]
+    : styles.currencySelector;
+  const textStyle = compact 
+    ? [styles.currencySelectorText, { fontSize: 12 }]
+    : styles.currencySelectorText;
+  const dividerStyle = compact ? [styles.divider, { fontSize: 12, marginHorizontal: 2 }] : styles.divider;
+
   return (
     <View>
-      <ThemedText style={styles.label}>Döviz Çifti</ThemedText>
-      <View style={styles.currencyPairContainer}>
+      {!compact && <ThemedText style={labelStyle}>Döviz Çifti</ThemedText>}
+      <View style={containerStyle}>
         <Controller
           control={control}
           name="baseAsset"
           render={({ field: { value } }) => (
             <Pressable
-              style={[styles.currencySelector, dynamicStyles.currencySelector(!!errors.baseAsset)]}
+              style={[selectorStyle, dynamicStyles.currencySelector(!!errors.baseAsset)]}
               onPress={onBaseAssetPress}
             >
               <ThemedText
-                style={[styles.currencySelectorText, dynamicStyles.currencySelectorText(!!value)]}
+                style={[textStyle, dynamicStyles.currencySelectorText(!!value)]}
               >
                 {value || 'Varlık Seçin'}
               </ThemedText>
               <Ionicons
                 name="chevron-down"
-                size={20}
+                size={compact ? 14 : 16}
                 color={dynamicStyles.currencySelectorIcon()}
               />
             </Pressable>
           )}
         />
 
-        <ThemedText style={styles.divider}>/</ThemedText>
+        <ThemedText style={dividerStyle}>/</ThemedText>
 
-        <View style={[styles.currencySelector, dynamicStyles.quoteAssetSelector()]}>
-          <ThemedText style={[styles.currencySelectorText, dynamicStyles.quoteAssetText()]}>
+        <View style={[selectorStyle, dynamicStyles.quoteAssetSelector()]}>
+          <ThemedText style={[textStyle, dynamicStyles.quoteAssetText()]}>
             {quoteAsset}
           </ThemedText>
         </View>

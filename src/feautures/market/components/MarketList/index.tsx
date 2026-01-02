@@ -1,4 +1,5 @@
 import React from 'react';
+import { CTextTitle } from '@/components/ui';
 import { ThemedText } from '@/components/ui/themed-text';
 import { ThemedView } from '@/components/ui/themed-view';
 import { useCurrencySocket } from '@/hooks/use-currency-socket';
@@ -11,7 +12,7 @@ export function MarketList() {
   return (
     <ThemedView style={styles.container}>
       <ThemedView card style={styles.card}>
-        <ThemedText style={styles.title}>Anlık Döviz Kurları</ThemedText>
+        <CTextTitle>Anlık Döviz Kurları</CTextTitle>
         <ThemedText style={styles.subtitle}>24 Saatlik güncel fiyatlardan anında haberdar olun!</ThemedText>
       </ThemedView>
         <MarketTable currencies={socketCurrencies} isConnected={isConnected} />

@@ -1,6 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { CTextTitle } from '@/components/ui';
 import { ThemedText } from '@/components/ui/themed-text';
 import { ThemedView } from '@/components/ui/themed-view';
 import { todayPerformance } from '@/db';
@@ -14,7 +15,7 @@ export function TodayPerformance() {
   return (
     <ThemedView style={styles.container}>
       <ThemedView card style={styles.card}>
-        <ThemedText style={styles.title}>Bugünkü Performans</ThemedText>
+        <CTextTitle>Bugünkü Performans</CTextTitle>
 
         <View style={styles.performanceRow}>
           {/* En çok kazandıran */}

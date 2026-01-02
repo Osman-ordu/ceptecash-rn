@@ -1,10 +1,13 @@
 export { AmountInput } from './AmountInput';
 export { Button } from './button';
+export { CTextTitle } from './CTextTitle';
 export { CurrencyPairSelector } from './CurrencyPairSelector';
 export type { Column, CustomGridProps, TabConfig } from './CustomGrid';
 export { CustomGrid } from './CustomGrid';
 export { EmptyState } from './EmptyState';
 export { MarketTableRow } from './MarketTableRow';
 export { PriceDisplay } from './PriceDisplay';
+export { Tabs } from './Tabs';
+export type { TabItem } from './Tabs';
 export { ThemedText } from './themed-text';
 export { ThemedView } from './themed-view';

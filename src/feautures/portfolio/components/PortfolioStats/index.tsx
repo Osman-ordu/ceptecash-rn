@@ -1,6 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { CTextTitle } from '@/components/ui';
 import { ThemedText } from '@/components/ui/themed-text';
 import { ThemedView } from '@/components/ui/themed-view';
 import { portfolioDistribution } from '@/db';
@@ -11,7 +12,7 @@ export function PortfolioStats() {
   return (
     <ThemedView style={styles.container}>
       <ThemedView card style={styles.card}>
-        <ThemedText style={styles.title}>Portföy İstatistikleri</ThemedText>
+        <CTextTitle>Portföy İstatistikleri</CTextTitle>
 
         <View style={styles.statsGrid}>
           {portfolioDistribution.map((item, index) => (

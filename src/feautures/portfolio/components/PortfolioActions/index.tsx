@@ -4,10 +4,11 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 import { Button } from '@/components/ui/button';
+import { CTextTitle } from '@/components/ui';
 import { ThemedText } from '@/components/ui/themed-text';
 import { ThemedView } from '@/components/ui/themed-view';
 import { SemanticColors } from '@/theme';
-import { RootStackParamList } from '@/types';
+import { RootStackParamList } from '@/navigation/types';
 import { styles } from './styles';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -29,14 +30,14 @@ export function PortfolioActions() {
   };
 
   const handleWithdraw = () => {
-    // TODO: Navigate to withdraw screen
+      // TODO: Navigate to withdraw screen
     console.log('Withdraw clicked');
   };
 
   return (
     <ThemedView style={styles.container}>
       <ThemedView card style={styles.card}>
-        <ThemedText style={styles.title}>Hızlı İşlemler</ThemedText>
+        <CTextTitle>Hızlı İşlemler</CTextTitle>
 
         <View style={styles.actionsGrid}>
           <Button
@@ -44,7 +45,7 @@ export function PortfolioActions() {
             onPress={handleBuy}
             variant="primary"
             size="medium"
-            style={[styles.actionButton, styles.buyButton]}
+            style={styles.actionButton}
             textStyle={styles.actionButtonText}
           />
           <Button
@@ -52,7 +53,7 @@ export function PortfolioActions() {
             onPress={handleSell}
             variant="outline"
             size="medium"
-            style={[styles.actionButton, styles.sellButton]}
+            style={styles.actionButton}
             textStyle={styles.actionButtonText}
           />
         </View>
