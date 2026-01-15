@@ -3,9 +3,9 @@ import { Alert, Modal, Pressable, ScrollView, TextInput, View } from 'react-nati
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 import { AppLogo, useAppLogoHeight } from '@/components/layout';
-import { Button } from '@/components/ui/button';
-import { ThemedText } from '@/components/ui/themed-text';
-import { ThemedView } from '@/components/ui/themed-view';
+import { Button } from '@/components/ui/Button';
+import { ThemedText } from '@/components/ui/ThemedText';
+import { ThemedView } from '@/components/ui/ThemedView';
 import { currencyList } from '@/db';
 import { useCurrencySocket } from '@/hooks/use-currency-socket';
 import { useThemeColor } from '@/hooks/use-theme-color';

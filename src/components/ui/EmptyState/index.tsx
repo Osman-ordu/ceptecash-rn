@@ -1,14 +1,11 @@
 import React from 'react';
 import { View } from 'react-native';
 import { useThemeColor } from '@/hooks/use-theme-color';
-import { ThemedText } from '../themed-text';
+import { IEmptyStateProps } from '@/types';
+import { ThemedText } from '../ThemedText';
 import { styles } from './styles';
 
-interface EmptyStateProps {
-  message?: string;
-}
-
-export function EmptyState({ message = 'Veri bulunamadı' }: EmptyStateProps) {
+export function EmptyState({ message = 'Veri bulunamadı' }: IEmptyStateProps) {
   const textColor = useThemeColor({}, 'text');
 
   return (

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Animated } from 'react-native';
-import { ThemedText } from '@/components/ui/themed-text';
+import { ThemedText } from '@/components/ui/ThemedText';
 
 interface AnimatedPriceProps {
   value: number;

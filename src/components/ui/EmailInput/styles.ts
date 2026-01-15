@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 14,
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '500',
     minHeight: 52,
   },
   errorText: {

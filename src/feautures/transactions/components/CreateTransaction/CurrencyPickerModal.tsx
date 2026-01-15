@@ -1,20 +1,12 @@
 import React from 'react';
 import { Modal, Pressable, ScrollView, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { ThemedText } from '@/components/ui/themed-text';
-import { ThemedView } from '@/components/ui/themed-view';
+import { ThemedText } from '@/components/ui/ThemedText';
+import { ThemedView } from '@/components/ui/ThemedView';
 import { CURRENCIES_NAMES } from '@/feautures/market/constants';
 import { useThemeColor } from '@/hooks/use-theme-color';
+import { ICurrencyPickerModalProps } from '@/types';
 import { getModalStyles, styles } from './CurrencyPickerModal.styles';
-
-interface CurrencyPickerModalProps {
-  visible: boolean;
-  onClose: () => void;
-  availableCurrencies: string[];
-  selectedCurrency: string;
-  onSelectCurrency: (currency: string) => void;
-  currencies: Record<string, { buyPrice: number }>;
-}
 
 export function CurrencyPickerModal({
   visible,
@@ -23,7 +15,7 @@ export function CurrencyPickerModal({
   selectedCurrency,
   onSelectCurrency,
   currencies,
-}: CurrencyPickerModalProps) {
+}: ICurrencyPickerModalProps) {
   const textColor = useThemeColor({}, 'text');
   const backgroundColor = useThemeColor({}, 'background');
   const modalStyles = getModalStyles(textColor);

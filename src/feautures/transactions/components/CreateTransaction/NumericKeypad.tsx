@@ -1,22 +1,16 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import { ThemedText } from '@/components/ui/themed-text';
+import { StyleSheet,TouchableOpacity, View } from 'react-native';
+import { ThemedText } from '@/components/ui/ThemedText';
 import { useThemeColor } from '@/hooks/use-theme-color';
 import { SemanticColors } from '@/theme';
-
-interface NumericKeypadProps {
-  onNumberPress: (number: string) => void;
-  onDeletePress: () => void;
-  onDecimalPress: () => void;
-  disabled?: boolean;
-}
+import { INumericKeypadProps } from '@/types';
 
 export function NumericKeypad({
   onNumberPress,
   onDeletePress,
   onDecimalPress,
   disabled = false,
-}: NumericKeypadProps) {
+}: INumericKeypadProps) {
   const textColor = useThemeColor({}, 'text');
   const backgroundColor = useThemeColor({}, 'card');
   const borderColor = useThemeColor({}, 'text');
@@ -69,28 +63,24 @@ export function NumericKeypad({
 
   return (
     <View style={styles.container}>
-      {/* Row 1: 1, 2, 3 */}
       <View style={styles.row}>
         <KeypadButton label="1" onPress={() => onNumberPress('1')} />
         <KeypadButton label="2" onPress={() => onNumberPress('2')} />
         <KeypadButton label="3" onPress={() => onNumberPress('3')} />
       </View>
 
-      {/* Row 2: 4, 5, 6 */}
       <View style={styles.row}>
         <KeypadButton label="4" onPress={() => onNumberPress('4')} />
         <KeypadButton label="5" onPress={() => onNumberPress('5')} />
         <KeypadButton label="6" onPress={() => onNumberPress('6')} />
       </View>
 
-      {/* Row 3: 7, 8, 9 */}
       <View style={styles.row}>
         <KeypadButton label="7" onPress={() => onNumberPress('7')} />
         <KeypadButton label="8" onPress={() => onNumberPress('8')} />
         <KeypadButton label="9" onPress={() => onNumberPress('9')} />
       </View>
 
-      {/* Row 4: ., 0, Delete */}
       <View style={styles.row}>
         <KeypadButton label="." onPress={onDecimalPress} />
         <KeypadButton label="0" onPress={() => onNumberPress('0')} />

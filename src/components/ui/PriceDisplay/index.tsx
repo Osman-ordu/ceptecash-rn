@@ -1,16 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
-import { ThemedText } from '../themed-text';
+import { IPriceDisplayProps } from '@/types';
+import { ThemedText } from '../ThemedText';
 import { styles } from './styles';
-
-interface PriceDisplayProps {
-  baseAsset: string;
-  quoteAsset: string;
-  price: number;
-  amount: string;
-  calculatedTotal: number;
-  compact?: boolean;
-}
 
 export function PriceDisplay({
   baseAsset,
@@ -19,19 +11,19 @@ export function PriceDisplay({
   amount,
   calculatedTotal,
   compact = false,
-}: PriceDisplayProps) {
+}: IPriceDisplayProps) {
   if (!baseAsset || price <= 0) return null;
 
-  const containerStyle = compact 
+  const containerStyle = compact
     ? [styles.priceContainer, { padding: 8, gap: 4 }]
     : styles.priceContainer;
-  const labelStyle = compact 
+  const labelStyle = compact
     ? [styles.priceLabel, { fontSize: 11 }]
     : styles.priceLabel;
-  const valueStyle = compact 
+  const valueStyle = compact
     ? [styles.priceValue, { fontSize: 12 }]
     : styles.priceValue;
-  const totalStyle = compact 
+  const totalStyle = compact
     ? [styles.totalValue, { fontSize: 14 }]
     : styles.totalValue;
 

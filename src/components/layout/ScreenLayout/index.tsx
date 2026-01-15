@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
-import { ThemedView } from '@/components/ui/themed-view';
+import { ThemedView } from '@/components/ui/ThemedView';
 import { AppLogo, useAppLogoHeight } from '../AppLogo';
 import { IScreenLayoutProps } from './types';
 

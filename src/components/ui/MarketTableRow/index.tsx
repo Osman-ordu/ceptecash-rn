@@ -1,8 +1,8 @@
 import React from 'react';
 import { LayoutAnimation, Platform,Pressable, UIManager } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { ThemedText } from '@/components/ui/themed-text';
-import { ThemedView } from '@/components/ui/themed-view';
+import { ThemedText } from '@/components/ui/ThemedText';
+import { ThemedView } from '@/components/ui/ThemedView';
 import { formatCurrencyPair,formatPercent, formatPrice } from '@/utils/general';
 import { MARKET_TABLE_ROW_LABELS } from './constants';
 import { useChangeIndicator,useMarketTableRowStyles } from './hooks';

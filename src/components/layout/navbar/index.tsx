@@ -8,7 +8,7 @@ import Animated, {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { usePathname, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { ThemedText } from '@/components/ui/themed-text';
+import { ThemedText } from '@/components/ui/ThemedText';
 import { NAVBAR_COLORS } from '@/constants/navbar';
 import { navItems } from '@/db';
 import { useColorScheme } from '@/hooks/use-color-scheme';

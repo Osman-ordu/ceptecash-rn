@@ -1,9 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
 import Svg, { G, Path } from 'react-native-svg';
-import { CTextTitle } from '@/components/ui';
-import { ThemedText } from '@/components/ui/themed-text';
-import { ThemedView } from '@/components/ui/themed-view';
+import { TextTitle } from '@/components/ui';
+import { ThemedText } from '@/components/ui/ThemedText';
+import { ThemedView } from '@/components/ui/ThemedView';
 import { portfolioDistribution } from '@/db';
 import { styles } from './styles';
 
@@ -59,7 +59,7 @@ export function PortfolioDistribution() {
   return (
     <ThemedView style={styles.container}>
       <ThemedView card style={styles.card}>
-        <CTextTitle>Portföy Dağılımı</CTextTitle>
+        <TextTitle>Portföy Dağılımı</TextTitle>
 
         <View style={styles.chartContainer}>
           <View style={styles.chartWrapper}>

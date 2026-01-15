@@ -1,16 +1,13 @@
 import React, { useMemo } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
-import { ThemedView } from '@/components/ui/themed-view';
+import { ThemedView } from '@/components/ui/ThemedView';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useThemeColor } from '@/hooks/use-theme-color';
+import { IAppLogoProps } from '@/types';
 import { styles } from './styles';
 
-interface AppLogoProps {
-  logoHeight?: number;
-}
-
-export function AppLogo({ logoHeight = 60 }: AppLogoProps) {
+export function AppLogo({ logoHeight = 60 }: IAppLogoProps) {
   const insets = useSafeAreaInsets();
   const colorScheme = useColorScheme();
   const backgroundColor = useThemeColor({}, 'background');
@@ -21,6 +18,7 @@ export function AppLogo({ logoHeight = 60 }: AppLogoProps) {
     () =>
       colorScheme === 'dark'
         ? require('@/assets/images/text-logo-dark-mini.png')
+
         : require('@/assets/images/text-logo-light-mini.png'),
     [colorScheme]
   );
@@ -48,7 +46,6 @@ export function AppLogo({ logoHeight = 60 }: AppLogoProps) {
   );
 }
 
-// Export total header height calculation helper
 export function useAppLogoHeight(logoHeight: number = 60) {
   const insets = useSafeAreaInsets();
   return logoHeight + insets.top;

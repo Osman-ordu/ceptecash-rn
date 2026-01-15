@@ -1,56 +1,10 @@
 import React, { useMemo,useState } from 'react';
 import { ActivityIndicator, FlatList, Pressable,View } from 'react-native';
 import { EmptyState } from '@/components/ui/EmptyState';
-import { ThemedText } from '@/components/ui/themed-text';
-import { ThemedView } from '@/components/ui/themed-view';
+import { ThemedText } from '@/components/ui/ThemedText';
+import { ThemedView } from '@/components/ui/ThemedView';
+import { CustomGridProps, IColumn } from '@/types';
 import { styles } from './styles';
-
-export interface Column {
-  dataField: string | string[];
-  caption: string;
-  addition?: {
-    allowSorting?: boolean;
-    width?: number | string;
-    align?: 'left' | 'center' | 'right';
-    renderCell?: (value: any, row: any, index: number) => React.ReactNode;
-    separator?: string; // Birden fazla dataField için ayırıcı (varsayılan: ' ')
-  };
-}
-
-export interface TabConfig {
-  type: string; // Tab type field name in data (e.g., 'side', 'status')
-  tabs: {
-    value: string; // Tab value to filter (e.g., 'buy', 'sell')
-    label: string; // Tab display label (e.g., 'Alınan', 'Satılan')
-  }[];
-  defaultTab?: string; // Default active tab value
-}
-
-type CustomGridPropsBase = {
-  gridKey: string;
-  data: any[];
-  columns: Column[];
-  loading?: boolean;
-  emptyMessage?: string;
-  onRowPress?: (row: any, index: number) => void;
-  renderRowActions?: (row: any, index: number) => React.ReactNode;
-  style?: any;
-  headerStyle?: any;
-  rowStyle?: any;
-  cellStyle?: any;
-};
-
-type CustomGridPropsWithTab = CustomGridPropsBase & {
-  tab: true;
-  tabConfig: TabConfig;
-};
-
-type CustomGridPropsWithoutTab = CustomGridPropsBase & {
-  tab?: false;
-  tabConfig?: never;
-};
-
-export type CustomGridProps = CustomGridPropsWithTab | CustomGridPropsWithoutTab;
 
 export function CustomGrid({
   gridKey,
@@ -58,7 +12,6 @@ export function CustomGrid({
   columns,
   loading = false,
   emptyMessage = 'Veri bulunamadı',
-  onRowPress,
   renderRowActions,
   style,
   headerStyle,
@@ -111,14 +64,13 @@ export function CustomGrid({
     if (Array.isArray(dataField)) {
       return dataField;
     }
-    // String formatını destekle: 'total + baseAsset' -> ['total', 'baseAsset']
     if (typeof dataField === 'string' && (dataField.includes(' + ') || dataField.includes('+'))) {
       return dataField.split(/\s*\+\s*/).map(field => field.trim()).filter(Boolean);
     }
     return [dataField];
   };
 
-  const getCellValue = (column: Column, row: any): any => {
+  const getCellValue = (column: IColumn, row: any): any => {
     const fields = parseDataField(column.dataField);
 
     if (fields.length > 1) {
@@ -134,12 +86,12 @@ export function CustomGrid({
     return row[fields[0]];
   };
 
-  const getColumnKey = (column: Column): string => {
+  const getColumnKey = (column: IColumn): string => {
     const fields = parseDataField(column.dataField);
     return fields.join('-');
   };
 
-  const renderCell = (column: Column, value: any, row: any, rowIndex: number) => {
+  const renderCell = (column: IColumn, value: any, row: any, rowIndex: number) => {
     const columnWidth = column.addition?.width || 'auto';
     const align = column.addition?.align || 'center';
     const columnKey = getColumnKey(column);
@@ -161,7 +113,6 @@ export function CustomGrid({
       );
     }
 
-    // Default render
     return (
       <View
         key={`${gridKey}-cell-${columnKey}-${rowIndex}`}

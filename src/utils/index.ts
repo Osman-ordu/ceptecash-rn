@@ -1,3 +1,3 @@
-// Utility functions will be exported from here
+export { getFirebaseErrorMessage } from './firebaseErrors';
 export { cleanNumericInput, formatTransactionDate } from './general';
 

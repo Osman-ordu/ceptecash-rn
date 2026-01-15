@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
-import { CurrencyData } from '@/hooks/use-currency-socket';
+import { ICurrencyData } from '@/types';
 import { formatTimeString } from '@/utils/general';
 import { CURRENCIES, CURRENCIES_NAMES, DUMMY_QUICK_TRANSACTIONS } from '../constants';
 
 interface UseMarketDataProps {
-  socketCurrencies: Record<string, CurrencyData>;
+  socketCurrencies: Record<string, ICurrencyData>;
   isConnected: boolean;
 }
 

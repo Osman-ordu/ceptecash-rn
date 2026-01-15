@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MarketTableRow } from '@/components/ui/MarketTableRow';
-import { ThemedText } from '@/components/ui/themed-text';
-import { ThemedView } from '@/components/ui/themed-view';
+import { ThemedText } from '@/components/ui/ThemedText';
+import { ThemedView } from '@/components/ui/ThemedView';
 import { formatTimeString } from '@/utils/general';
 import { CURRENCIES, CURRENCIES_NAMES } from '../../constants';
 import { useMarketTableStyles } from './hooks';

@@ -1,23 +1,14 @@
 import React from 'react';
 import { Modal, Pressable, ScrollView,TextInput, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Button } from '@/components/ui/button';
-import { ThemedText } from '@/components/ui/themed-text';
-import { ThemedView } from '@/components/ui/themed-view';
+import { Button } from '@/components/ui/Button';
+import { ThemedText } from '@/components/ui/ThemedText';
+import { ThemedView } from '@/components/ui/ThemedView';
 import { CURRENCIES_NAMES } from '@/feautures/market/constants';
 import { useThemeColor } from '@/hooks/use-theme-color';
+import { IAddCurrencyModalProps } from '@/types';
 import { cleanNumericInput } from '@/utils';
 import { styles } from './styles';
-
-interface AddCurrencyModalProps {
-  visible: boolean;
-  selectedCurrency: string | null;
-  modalAmount: string;
-  calculatedTry: number;
-  onClose: () => void;
-  onSubmit: () => void;
-  onAmountChange: (amount: string) => void;
-}
 
 export function AddCurrencyModal({
   visible,
@@ -27,7 +18,7 @@ export function AddCurrencyModal({
   onClose,
   onSubmit,
   onAmountChange,
-}: AddCurrencyModalProps) {
+}: IAddCurrencyModalProps) {
   const textColor = useThemeColor({}, 'text');
   const backgroundColor = useThemeColor({}, 'background');
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Pressable,View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { CTextTitle } from '@/components/ui';
-import { ThemedText } from '@/components/ui/themed-text';
-import { ThemedView } from '@/components/ui/themed-view';
+import { TextTitle } from '@/components/ui';
+import { ThemedText } from '@/components/ui/ThemedText';
+import { ThemedView } from '@/components/ui/ThemedView';
 import { portfolioHoldings } from '@/db';
 import { SemanticColors } from '@/theme';
 import { styles } from './styles';
@@ -13,7 +13,7 @@ export function PortfolioHoldings() {
     <ThemedView style={styles.container}>
       <ThemedView card style={styles.card}>
         <View style={styles.header}>
-          <CTextTitle style={{ marginBottom: 0 }}>Varlıklarım</CTextTitle>
+          <TextTitle style={{ marginBottom: 0 }}>Varlıklarım</TextTitle>
           <Pressable>
             <ThemedText style={styles.filterText}>Filtrele</ThemedText>
           </Pressable>

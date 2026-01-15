@@ -1,9 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { CTextTitle } from '@/components/ui';
-import { ThemedText } from '@/components/ui/themed-text';
-import { ThemedView } from '@/components/ui/themed-view';
+import { TextTitle } from '@/components/ui';
+import { ThemedText } from '@/components/ui/ThemedText';
+import { ThemedView } from '@/components/ui/ThemedView';
 import { portfolioDistribution } from '@/db';
 import { CurrencyColors,SemanticColors } from '@/theme';
 import { styles } from './styles';
@@ -12,7 +12,7 @@ export function PortfolioStats() {
   return (
     <ThemedView style={styles.container}>
       <ThemedView card style={styles.card}>
-        <CTextTitle>Portföy İstatistikleri</CTextTitle>
+        <TextTitle>Portföy İstatistikleri</TextTitle>
 
         <View style={styles.statsGrid}>
           {portfolioDistribution.map((item, index) => (

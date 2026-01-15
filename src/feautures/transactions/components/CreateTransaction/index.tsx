@@ -1,22 +1,31 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { AmountInput, CurrencyPairSelector, PriceDisplay } from '@/components/ui';
-import { Button } from '@/components/ui/button';
-import { ThemedView } from '@/components/ui/themed-view';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { AmountInput } from '@/components/ui/AmountInput';
+import { Button } from '@/components/ui/Button';
+import { CurrencyPairSelector } from '@/components/ui/CurrencyPairSelector';
+import { PriceDisplay } from '@/components/ui/PriceDisplay';
+import { ThemedView } from '@/components/ui/ThemedView';
+import { useAuth } from '@/contexts/AuthContext';
 import { useCurrencySocket } from '@/hooks/use-currency-socket';
 import { useThemeColor } from '@/hooks/use-theme-color';
+import { RootStackParamList } from '@/navigation/types';
 import { useAppDispatch } from '@/store/hooks';
 import { getQuickTransaction, postQuickTransaction } from '@/store/quickTransactions';
 import { CreateQuickTransaction } from '@/store/quickTransactions/types';
 import { cleanNumericInput } from '@/utils';
-import { ConnectionStatus } from './ConnectionStatus';
+import { useTransactionForm } from '../../hooks/use-transaction-form';
 import { CurrencyPickerModal } from './CurrencyPickerModal';
 import { NumericKeypad } from './NumericKeypad';
-import { useTransactionForm } from '../../hooks/use-transaction-form';
 import { getDynamicStyles, styles } from './styles';
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 export default function CreateTransaction() {
   const dispatch = useAppDispatch();
+  const navigation = useNavigation<NavigationProp>();
+  const { user } = useAuth();
   const textColor = useThemeColor({}, 'text');
   const dynamicStyles = getDynamicStyles(textColor);
   const { currencies: socketCurrencies, isConnected } = useCurrencySocket();
@@ -82,7 +91,6 @@ export default function CreateTransaction() {
 
   return (
     <ThemedView card style={styles.card}>
-      <ConnectionStatus isConnected={isConnected} />
 
       <View style={styles.formContainer}>
         <CurrencyPairSelector
@@ -123,12 +131,12 @@ export default function CreateTransaction() {
 
         {baseAsset && (
           <Button
-            title="Portföy'e Ekle"
-            onPress={handleSubmit(onSubmit)}
+            title={user ? "Portföy'e Ekle" : "Üye Ol"}
+            onPress={user ? handleSubmit(onSubmit) : () => navigation.navigate('Register')}
             variant="primary"
             size="small"
-            loading={isSubmitting}
-            disabled={!baseAsset || !amount || !isConnected || isSubmitting}
+            loading={user ? isSubmitting : undefined}
+            disabled={user ? (!baseAsset || !amount || !isConnected || isSubmitting) : false}
             style={styles.submitButton}
           />
         )}

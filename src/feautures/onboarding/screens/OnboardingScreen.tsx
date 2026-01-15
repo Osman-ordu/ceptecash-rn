@@ -7,12 +7,12 @@ import {
   View,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Button } from '@/components/ui/button';
-import { ThemedText } from '@/components/ui/themed-text';
-import { ThemedView } from '@/components/ui/themed-view';
+import { Button } from '@/components/ui/Button';
+import { ThemedText } from '@/components/ui/ThemedText';
+import { ThemedView } from '@/components/ui/ThemedView';
 import { slides } from '@/db';
+import type { RootStackParamList } from '@/navigation/types';
 import { Colors } from '@/theme';
-import { RootStackParamList } from '@/types';
 import { styles } from './OnboardingScreen.styles';
 const { width } = Dimensions.get('window');
 type Props = NativeStackScreenProps<RootStackParamList, 'Onboarding'>;

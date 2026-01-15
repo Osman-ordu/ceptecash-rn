@@ -1,4 +1,5 @@
-import { ReactNode, StyleProp, ViewStyle } from 'react-native';
+import { StyleProp, ViewStyle } from 'react-native';
+import type { ReactNode } from 'react';
 
 export interface IScreenLayoutProps {
   children: ReactNode;

@@ -1,21 +1,10 @@
 import React from 'react';
 import { TextInput } from 'react-native';
-import { Control, Controller, FieldErrors } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
+import { IAmountInputProps } from '@/types';
 import { cleanNumericInput } from '@/utils';
-import { ThemedText } from '../themed-text';
+import { ThemedText } from '../ThemedText';
 import { styles } from './styles';
-
-interface AmountInputProps {
-  control: Control<any>;
-  errors: FieldErrors<any>;
-  dynamicStyles: {
-    input: (hasError: boolean) => any;
-    inputPlaceholder: () => string;
-  };
-  editable?: boolean;
-  showKeyboard?: boolean;
-  compact?: boolean;
-}
 
 export function AmountInput({
   control,
@@ -24,9 +13,9 @@ export function AmountInput({
   editable = true,
   showKeyboard = true,
   compact = false,
-}: AmountInputProps) {
+}: IAmountInputProps) {
   const labelStyle = compact ? [styles.label, { fontSize: 10, marginBottom: 2 }] : styles.label;
-  const inputStyle = compact 
+  const inputStyle = compact
     ? [styles.input, dynamicStyles.input(!!errors.amount), { paddingVertical: 6, minHeight: 36, fontSize: 14, borderRadius: 8 }]
     : [styles.input, dynamicStyles.input(!!errors.amount)];
 

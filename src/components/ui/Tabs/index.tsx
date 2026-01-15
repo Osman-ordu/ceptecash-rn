@@ -1,22 +1,11 @@
 import React from 'react';
 import { Pressable, View } from 'react-native';
-import { ThemedText } from '../themed-text';
 import { useThemeColor } from '@/hooks/use-theme-color';
+import { ITabsProps } from '@/types';
+import { ThemedText } from '../ThemedText';
 import { styles } from './styles';
 
-export interface TabItem {
-  value: string;
-  label: string;
-  content: React.ReactNode;
-}
-
-interface TabsProps {
-  tabs: TabItem[];
-  defaultTab?: string;
-  onTabChange?: (value: string) => void;
-}
-
-export function Tabs({ tabs, defaultTab, onTabChange }: TabsProps) {
+export function Tabs({ tabs, defaultTab, onTabChange }: ITabsProps) {
   const [activeTab, setActiveTab] = React.useState<string>(
     defaultTab || tabs[0]?.value || ''
   );

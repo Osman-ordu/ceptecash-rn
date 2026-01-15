@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { ScreenLayout } from '@/components/layout';
-import { Tabs, type TabItem } from '@/components/ui';
+import { type TabItem,Tabs } from '@/components/ui';
 import AllTransactions from '../components/AllTransactions';
 import CreateTransaction from '../components/CreateTransaction';
 import QuickTransactions from '../components/LastTransactions';

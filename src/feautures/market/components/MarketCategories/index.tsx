@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Pressable,ScrollView } from 'react-native';
-import { ThemedText } from '@/components/ui/themed-text';
-import { ThemedView } from '@/components/ui/themed-view';
+import { ThemedText } from '@/components/ui/ThemedText';
+import { ThemedView } from '@/components/ui/ThemedView';
 import { styles } from './styles';
 
 const categories = [

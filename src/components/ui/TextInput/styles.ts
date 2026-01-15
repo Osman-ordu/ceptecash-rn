@@ -8,31 +8,14 @@ export const styles = StyleSheet.create({
     marginBottom: 8,
     opacity: 0.8,
   },
-  currencyPairContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  currencySelector: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+  input: {
     borderWidth: 1,
     borderRadius: 12,
     paddingHorizontal: 16,
     paddingVertical: 14,
-    minHeight: 52,
-  },
-  currencySelectorText: {
     fontSize: 16,
-    fontWeight: '600',
-  },
-  divider: {
-    fontSize: 18,
-    fontWeight: '600',
-    opacity: 0.5,
-    marginHorizontal: 4,
+    fontWeight: '500',
+    minHeight: 52,
   },
   errorText: {
     fontSize: 12,
@@ -41,4 +24,5 @@ export const styles = StyleSheet.create({
     fontWeight: '500',
   },
 });
+
 

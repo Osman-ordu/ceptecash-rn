@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ThemedView } from '@/components/ui/themed-view';
+import { ThemedView } from '@/components/ui/ThemedView';
 import { ProfileActions } from '@/feautures/profile/components/ProfileActions';
 import { ProfileHeader } from '@/feautures/profile/components/ProfileHeader';
 import { ProfileSettings } from '@/feautures/profile/components/ProfileSettings';

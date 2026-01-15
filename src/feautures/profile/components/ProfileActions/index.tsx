@@ -1,12 +1,18 @@
 import React from 'react';
 import { Alert,Pressable, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
-import { ThemedText } from '@/components/ui/themed-text';
-import { ThemedView } from '@/components/ui/themed-view';
+import { signOut } from 'firebase/auth';
+import { ThemedText } from '@/components/ui/ThemedText';
+import { ThemedView } from '@/components/ui/ThemedView';
+import { auth } from '@/lib/firebase';
+import { RootStackParamList } from '@/navigation/types';
 import { SemanticColors } from '@/theme';
 import { styles } from './styles';
 
 export function ProfileActions() {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const handleLogout = () => {
     Alert.alert(
       'Çıkış Yap',
@@ -19,9 +25,15 @@ export function ProfileActions() {
         {
           text: 'Çıkış Yap',
           style: 'destructive',
-          onPress: () => {
-            // TODO: Implement logout logic
-            console.log('Logout');
+          onPress: async () => {
+            try {
+                await signOut(auth);
+                navigation.navigate('Login' as keyof RootStackParamList);
+                Alert.alert('Çıkış başarılı', 'Çıkış yapıldı');
+            } catch (error) {
+              console.error('Çıkış hatası:', error);
+              Alert.alert('Çıkış hatası', 'Çıkış yapılırken bir hata oluştu');
+            }
           },
         },
       ]

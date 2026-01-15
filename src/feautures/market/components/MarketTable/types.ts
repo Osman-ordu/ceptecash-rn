@@ -1,7 +1,7 @@
-import { CurrencyData } from '@/hooks/use-currency-socket';
+import { ICurrencyData } from '@/types';
 
 export interface IMarketTableProps {
-  currencies: Record<string, CurrencyData>;
+  currencies: Record<string, ICurrencyData>;
   isConnected: boolean;
 }
 

@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { ScrollView, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { ThemedText } from '@/components/ui/themed-text';
-import { ThemedView } from '@/components/ui/themed-view';
+import { ThemedText } from '@/components/ui/ThemedText';
+import { ThemedView } from '@/components/ui/ThemedView';
 import { CURRENCY_LABELS,CURRENCY_WIDTH, DISPLAY_CURRENCIES , SCROLL_SPEED } from '@/db';
 import { useCurrencySocket } from '@/hooks/use-currency-socket';
 import { CurrencyColors, SemanticColors } from '@/theme';

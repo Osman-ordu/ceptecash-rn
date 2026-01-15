@@ -1,24 +1,10 @@
 import React from 'react';
 import { Pressable,View } from 'react-native';
-import { Control, Controller, FieldErrors } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 import { Ionicons } from '@expo/vector-icons';
-import { ThemedText } from '../themed-text';
+import { ICurrencyPairSelectorProps } from '@/types';
+import { ThemedText } from '../ThemedText';
 import { styles } from './styles';
-
-interface CurrencyPairSelectorProps {
-  control: Control<any>;
-  errors: FieldErrors<any>;
-  onBaseAssetPress: () => void;
-  quoteAsset?: string;
-  dynamicStyles: {
-    currencySelector: (hasError: boolean) => any;
-    currencySelectorText: (hasValue: boolean) => any;
-    currencySelectorIcon: () => string;
-    quoteAssetSelector: () => any;
-    quoteAssetText: () => any;
-  };
-  compact?: boolean;
-}
 
 export function CurrencyPairSelector({
   control,
@@ -27,13 +13,13 @@ export function CurrencyPairSelector({
   quoteAsset = 'TRY',
   dynamicStyles,
   compact = false,
-}: CurrencyPairSelectorProps) {
+}: ICurrencyPairSelectorProps) {
   const labelStyle = compact ? [styles.label, { fontSize: 10, marginBottom: 2 }] : styles.label;
   const containerStyle = compact ? [styles.currencyPairContainer, { gap: 4 }] : styles.currencyPairContainer;
-  const selectorStyle = compact 
+  const selectorStyle = compact
     ? [styles.currencySelector, { paddingVertical: 6, minHeight: 36, paddingHorizontal: 8, borderRadius: 8 }]
     : styles.currencySelector;
-  const textStyle = compact 
+  const textStyle = compact
     ? [styles.currencySelectorText, { fontSize: 12 }]
     : styles.currencySelectorText;
   const dividerStyle = compact ? [styles.divider, { fontSize: 12, marginHorizontal: 2 }] : styles.divider;

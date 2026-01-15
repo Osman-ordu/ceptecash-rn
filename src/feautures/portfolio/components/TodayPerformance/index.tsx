@@ -1,9 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { CTextTitle } from '@/components/ui';
-import { ThemedText } from '@/components/ui/themed-text';
-import { ThemedView } from '@/components/ui/themed-view';
+import { TextTitle } from '@/components/ui';
+import { ThemedText } from '@/components/ui/ThemedText';
+import { ThemedView } from '@/components/ui/ThemedView';
 import { todayPerformance } from '@/db';
 import { SemanticColors } from '@/theme';
 import { styles } from './styles';
@@ -15,7 +15,7 @@ export function TodayPerformance() {
   return (
     <ThemedView style={styles.container}>
       <ThemedView card style={styles.card}>
-        <CTextTitle>Bugünkü Performans</CTextTitle>
+        <TextTitle>Bugünkü Performans</TextTitle>
 
         <View style={styles.performanceRow}>
           {/* En çok kazandıran */}

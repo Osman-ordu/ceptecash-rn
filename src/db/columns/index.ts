@@ -1,2 +1,2 @@
-export { currencyColumns, quickTransactionColumns } from './currencyColumns';
+export { currencyColumns } from './currencyColumns';
 

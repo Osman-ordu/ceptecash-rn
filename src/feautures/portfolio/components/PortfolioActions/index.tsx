@@ -3,12 +3,12 @@ import { Pressable,View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
-import { Button } from '@/components/ui/button';
-import { CTextTitle } from '@/components/ui';
-import { ThemedText } from '@/components/ui/themed-text';
-import { ThemedView } from '@/components/ui/themed-view';
-import { SemanticColors } from '@/theme';
+import { TextTitle } from '@/components/ui';
+import { Button } from '@/components/ui/Button';
+import { ThemedText } from '@/components/ui/ThemedText';
+import { ThemedView } from '@/components/ui/ThemedView';
 import { RootStackParamList } from '@/navigation/types';
+import { SemanticColors } from '@/theme';
 import { styles } from './styles';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -25,19 +25,17 @@ export function PortfolioActions() {
   };
 
   const handleDeposit = () => {
-    // TODO: Navigate to deposit screen
     console.log('Deposit clicked');
   };
 
   const handleWithdraw = () => {
-      // TODO: Navigate to withdraw screen
     console.log('Withdraw clicked');
   };
 
   return (
     <ThemedView style={styles.container}>
       <ThemedView card style={styles.card}>
-        <CTextTitle>Hızlı İşlemler</CTextTitle>
+        <TextTitle>Hızlı İşlemler</TextTitle>
 
         <View style={styles.actionsGrid}>
           <Button
