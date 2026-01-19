@@ -3,14 +3,22 @@ import { View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemedText } from '@/components/ui/ThemedText';
 import { ThemedView } from '@/components/ui/ThemedView';
-import { portfolioData } from '@/db';
+import { IPortfolioStatistics } from '@/store/portfolio/types';
 import { SemanticColors } from '@/theme';
 import { styles } from './styles';
 
-export function PortfolioHeader() {
-  const isPositive = portfolioData.dailyChange > 0;
+type PortfolioHeaderProps = {
+  statistics?: IPortfolioStatistics | null;
+};
+
+export function PortfolioHeader({ statistics }: PortfolioHeaderProps) {
+  const totalValue = statistics?.totalPortfolioValue ?? 0;
+  const dailyChange = statistics?.dailyChange ?? 0;
+  const totalProfitLoss = statistics?.totalProfitLoss ?? 0;
+
+  const isPositive = dailyChange > 0;
   const changeColor = isPositive ? SemanticColors.success : SemanticColors.error;
-  const profitLossColor = portfolioData.totalProfitLoss > 0 ? SemanticColors.success : SemanticColors.error;
+  const profitLossColor = totalProfitLoss > 0 ? SemanticColors.success : SemanticColors.error;
   const changeIcon = isPositive ? 'arrow-up' : 'arrow-down';
 
   return (
@@ -18,7 +26,7 @@ export function PortfolioHeader() {
       <ThemedView card style={styles.card}>
         <ThemedText style={styles.label}>Toplam Portföy Değeri</ThemedText>
         <ThemedText style={styles.totalValue}>
-          {portfolioData.totalValue.toLocaleString('tr-TR', {
+          {totalValue.toLocaleString('tr-TR', {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
           })}{' '}
@@ -30,7 +38,7 @@ export function PortfolioHeader() {
             <View style={styles.changeRow}>
               <Ionicons name={changeIcon} size={18} color={changeColor} />
               <ThemedText style={[styles.changeText, { color: changeColor }]}>
-                {Math.abs(portfolioData.dailyChange).toFixed(2)}%
+                {Math.abs(dailyChange).toFixed(2)}%
               </ThemedText>
             </View>
             <ThemedText style={styles.statLabel}>Günlük Değişim</ThemedText>
@@ -38,8 +46,8 @@ export function PortfolioHeader() {
 
           <View style={styles.statItem}>
             <ThemedText style={[styles.profitLossText, { color: profitLossColor }]}>
-              {portfolioData.totalProfitLoss > 0 ? '+' : ''}
-              {portfolioData.totalProfitLoss.toLocaleString('tr-TR', {
+              {totalProfitLoss > 0 ? '+' : ''}
+              {totalProfitLoss.toLocaleString('tr-TR', {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               })}{' '}
