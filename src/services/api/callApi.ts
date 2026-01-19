@@ -19,14 +19,17 @@ export const CallApi = async <T = any>({
   silent = false,
 }: CallApiProps): Promise<T> => {
   try {
+    const token = await tokenService.getToken();
+    const authHeaders = token ? { Authorization: `Bearer ${token}` } : {};
     const response = await axiosInstance({
       method,
       url,
       data,
       params,
-      headers: headers ? {
-        ...headers,
-      } : undefined,
+      headers: {
+        ...authHeaders,
+        ...(headers ?? {}),
+      },
     });
 
     return response.data;
@@ -45,7 +48,7 @@ const refreshToken = async () => {
   const token = await tokenService.getToken();
   const refreshToken = await tokenService.getRefreshToken();
 
-  const response = await axiosInstance.post('/api/Auth/refreshToken', {
+  const response = await axiosInstance.post('/api/auth/refreshToken', {
     token,
     refreshToken,
   });

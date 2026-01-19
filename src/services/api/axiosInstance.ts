@@ -7,6 +7,7 @@ export const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use(async (config: any) => {
+  config.headers = config.headers ?? {};
   if (!config.headers.Authorization) {
     const token = await tokenService.getToken();
     if (token) {

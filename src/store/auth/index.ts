@@ -18,6 +18,7 @@ export const getAuth = createAsyncThunk<AuthResponse, string, { rejectValue: str
       });
 
       if (response.success && response.data) {
+        await tokenService.setToken(firebaseToken);
         return response;
       } else {
         return rejectWithValue(response.message || response.error || 'Authentication failed');
@@ -48,6 +49,7 @@ export const registerProfile = createAsyncThunk<
       });
 
       if (response.success) {
+        await tokenService.setToken(idToken);
         return response;
       } else {
         return rejectWithValue(response.message || response.error || 'Profile registration failed');

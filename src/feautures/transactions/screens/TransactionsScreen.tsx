@@ -1,14 +1,14 @@
 import React from 'react';
 import { View } from 'react-native';
 import { ScreenLayout } from '@/components/layout';
-import { type TabItem,Tabs } from '@/components/ui';
+import { Tabs } from '@/components/ui';
 import AllTransactions from '../components/AllTransactions';
 import CreateTransaction from '../components/CreateTransaction';
 import QuickTransactions from '../components/LastTransactions';
 import { styles } from './TransactionsScreen.styles';
 
 export default function TransactionsScreen() {
-  const tabs: TabItem[] = [
+  const tabs = [
     {
       value: 'create',
       label: 'İşlem Oluştur',
