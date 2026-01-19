@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { SemanticColors } from '@/theme';
 
 export const styles = StyleSheet.create({
   label: {
@@ -29,9 +28,15 @@ export const styles = StyleSheet.create({
   },
   errorText: {
     fontSize: 12,
-    color: SemanticColors.error,
-    marginTop: 4,
+    marginTop: 6,
     fontWeight: '500',
+    opacity: 0.7,
+  },
+  infoText: {
+    fontSize: 12,
+    marginTop: 6,
+    fontWeight: '500',
+    opacity: 0.7,
   },
 });
 

@@ -16,7 +16,7 @@ export function Step2({ control, errors, dynamicStyles }: IRegisterStepProps) {
           label="Telefon"
           placeholder="05XX XXX XX XX"
           keyboardType="phone-pad"
-          maxLength={20}
+          maxLength={11}
         />
       </View>
     </View>

@@ -25,6 +25,10 @@ export function PasswordInput({
     { light: Colors.light.icon, dark: Colors.dark.icon },
     'icon'
   );
+  const infoColor = useThemeColor(
+    { light: Colors.light.icon, dark: Colors.dark.icon },
+    'icon'
+  );
 
   return (
     <Controller
@@ -60,11 +64,9 @@ export function PasswordInput({
               />
             </TouchableOpacity>
           </View>
-          {errors[name] && (
-            <ThemedText style={styles.errorText}>
-              {errors[name]?.message as string}
-            </ThemedText>
-          )}
+          <ThemedText style={[styles.infoText, { color: infoColor }]}>
+            Şifre en az 8 karakter olmalı, büyük/küçük harf, rakam ve özel karakter içermelidir.
+          </ThemedText>
         </>
       )}
     />

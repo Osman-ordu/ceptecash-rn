@@ -36,11 +36,6 @@ export function EmailInput({ control, errors, dynamicStyles }: IEmailInputProps)
             autoCorrect={false}
             textContentType="emailAddress"
           />
-          {errors.email && (
-            <ThemedText style={styles.errorText}>
-              {errors.email.message as string}
-            </ThemedText>
-          )}
         </>
       )}
     />

@@ -16,6 +16,7 @@ export function Step1({ control, errors, dynamicStyles }: IRegisterStepProps) {
           label="Ad"
           placeholder="Adınızı giriniz"
           autoCapitalize="words"
+          maxLength={15}
         />
       </View>
       <View style={styles.inputWrapper}>
@@ -27,6 +28,7 @@ export function Step1({ control, errors, dynamicStyles }: IRegisterStepProps) {
           label="Soyad"
           placeholder="Soyadınızı giriniz"
           autoCapitalize="words"
+          maxLength={15}
         />
       </View>
     </View>
