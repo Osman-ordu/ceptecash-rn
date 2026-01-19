@@ -4,7 +4,8 @@ import Svg, { G, Path } from 'react-native-svg';
 import { TextTitle } from '@/components/ui';
 import { ThemedText } from '@/components/ui/ThemedText';
 import { ThemedView } from '@/components/ui/ThemedView';
-import { portfolioDistribution } from '@/db';
+import { IPortfolioDistributionItem } from '@/store/portfolio/types';
+import { CurrencyColors } from '@/theme';
 import { styles } from './styles';
 
 const CHART_SIZE = 120;
@@ -13,6 +14,24 @@ const CHART_STROKE_WIDTH = 20;
 const CENTER = CHART_SIZE / 2;
 const INNER_RADIUS = CHART_RADIUS - CHART_STROKE_WIDTH / 2;
 const OUTER_RADIUS = CHART_RADIUS + CHART_STROKE_WIDTH / 2;
+
+const getAssetColor = (asset: string) => {
+  const normalized = asset.toUpperCase();
+
+  if (normalized in CurrencyColors) {
+    return CurrencyColors[normalized as keyof typeof CurrencyColors];
+  }
+
+  if (normalized.includes('XAU') || normalized.includes('GOLD') || normalized.includes('AYAR')) {
+    return CurrencyColors.GOLD;
+  }
+
+  if (normalized.includes('XAG') || normalized.includes('SILVER')) {
+    return CurrencyColors.SILVER;
+  }
+
+  return CurrencyColors.default;
+};
 
 // Calculate arc path for donut chart segment
 const createArcPath = (
@@ -40,10 +59,13 @@ const createArcPath = (
   return `M ${x1} ${y1} L ${x2} ${y2} A ${outerRadius} ${outerRadius} 0 ${largeArcFlag} 1 ${x3} ${y3} L ${x4} ${y4} A ${innerRadius} ${innerRadius} 0 ${largeArcFlag} 0 ${x1} ${y1} Z`;
 };
 
-export function PortfolioDistribution() {
-  // Calculate angles for each segment
-  let currentAngle = -90; // Start from top
-  const chartSegments = portfolioDistribution.map((item) => {
+type IPortfolioDistributionProps = {
+  distribution?: IPortfolioDistributionItem[];
+};
+
+export function PortfolioDistribution({ distribution = [] }: IPortfolioDistributionProps) {
+  let currentAngle = -90;
+  const chartSegments = distribution.map((item) => {
     const startAngle = currentAngle;
     const angle = (item.percentage / 100) * 360;
     const endAngle = startAngle + angle;
@@ -53,6 +75,7 @@ export function PortfolioDistribution() {
       startAngle,
       endAngle,
       path: createArcPath(startAngle, endAngle, INNER_RADIUS, OUTER_RADIUS, CENTER, CENTER),
+      color: getAssetColor(item.baseAsset),
     };
   });
 
@@ -77,12 +100,12 @@ export function PortfolioDistribution() {
           </View>
 
           <View style={styles.legend}>
-            {portfolioDistribution.map((item, index) => (
+            {distribution.map((item, index) => (
               <View key={index} style={styles.legendItem}>
-                <View style={[styles.legendColor, { backgroundColor: item.color }]} />
+                <View style={[styles.legendColor, { backgroundColor: getAssetColor(item.baseAsset) }]} />
                 <View style={styles.legendText}>
-                  <ThemedText style={styles.legendCoin}>{item.coin}</ThemedText>
-                  <ThemedText style={styles.legendPercentage}>{item.percentage}%</ThemedText>
+                  <ThemedText style={styles.legendCoin}>{item.baseAsset}</ThemedText>
+                  <ThemedText style={styles.legendPercentage}>{item.percentage.toFixed(2)}%</ThemedText>
                 </View>
               </View>
             ))}
