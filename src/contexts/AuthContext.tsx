@@ -1,6 +1,8 @@
 import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import { onAuthStateChanged,User } from 'firebase/auth';
+import { useDispatch } from 'react-redux';
+import { onAuthStateChanged, User } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
+import { getAuth } from '@/store/auth';
 
 export interface AuthContextType {
   user: User | null;
@@ -12,15 +14,31 @@ export const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      setLoading(false);
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (!currentUser) {
+        setUser(null);
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const idToken = await currentUser.getIdToken();
+        await dispatch(getAuth(idToken) as any).unwrap();
+        setUser(currentUser);
+      } catch (error) {
+        void error;
+        await auth.signOut();
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
     });
 
     return unsubscribe;
-  }, []);
+  }, [dispatch]);
 
   return (
     <AuthContext.Provider value={{ user, loading }}>
@@ -36,5 +54,4 @@ export function useAuth() {
   }
   return context;
 }
-
 
