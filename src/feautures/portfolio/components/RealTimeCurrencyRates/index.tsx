@@ -40,7 +40,7 @@ const getCurrencyColor = (symbol: string): string => {
 export function RealTimeCurrencyRates() {
   const scrollViewRef = useRef<ScrollView>(null);
   const scrollX = useRef(0);
-  const { currencies, isConnected } = useCurrencySocket();
+  const { currencies, hasData, isConnected } = useCurrencySocket();
 
   const displayCurrencies = React.useMemo(() => {
 
@@ -83,7 +83,9 @@ export function RealTimeCurrencyRates() {
     };
   }, [displayCurrencies.length]);
 
-  if (displayCurrencies.length === 0) {
+  const ready = hasData && displayCurrencies.length > 0;
+
+  if (!ready) {
     return (
       <ThemedView style={styles.container}>
         <ThemedText style={styles.loadingText}>

@@ -88,3 +88,11 @@ export const formatPercent = (changePercent: number): string => {
 export const formatCurrencyPair = (currency: string): string => {
   return currency === 'GUMUSTRY' ? 'GUMUSTRY/TRY' : `${currency}/TRY`;
 };
+
+export const safeJsonParse = (value: string) => {
+  try {
+    return JSON.parse(value);
+  } catch {
+    return null;
+  }
+};
