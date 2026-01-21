@@ -31,6 +31,13 @@ export function useCurrencySocket() {
       }
 
       if (packetType === 4) {
+        if (message.startsWith('40')) {
+          return { type: 'connect' };
+        }
+        if (message.startsWith('41')) {
+          return { type: 'disconnect' };
+        }
+
         let dataStr = message.substring(1);
 
         let jsonStart = 1;
@@ -83,6 +90,16 @@ export function useCurrencySocket() {
 
         if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
           wsRef.current.send('40');
+        }
+        return;
+      }
+
+      if (parsed.type === 'connect') {
+        setIsConnected(true);
+
+        if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+          const subscribeMessage = JSON.stringify(['subscribe', 'kapalicarsi']);
+          wsRef.current.send(`42${subscribeMessage}`);
         }
         return;
       }
@@ -214,6 +231,9 @@ export function useCurrencySocket() {
 
       ws.onopen = () => {
         reconnectAttempts.current = 0;
+        if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+          wsRef.current.send('40');
+        }
       };
 
       ws.onmessage = (event) => {
