@@ -42,7 +42,7 @@ export function ProfileSettings() {
   };
 
   const handleAbout = () => {
-    Alert.alert('Hakkında', 'FinTrack Crypto v1.0.0');
+    Alert.alert('Hakkında', 'CepteCash v1.0.0');
   };
 
   const handleHelp = () => {

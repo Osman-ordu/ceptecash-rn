@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "fintrack-crypto",
-    "slug": "fintrack-crypto",
+    "name": "ceptecash",
+    "slug": "ceptecash",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/images/icon.png",
-    "scheme": "fintrackcrypto",
+    "scheme": "ceptecash",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {

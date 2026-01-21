@@ -39,7 +39,7 @@ export function AppLogo({ logoHeight = 60 }: IAppLogoProps) {
         style={styles.logoImage}
         contentFit="contain"
         transition={200}
-        accessibilityLabel="FinTrack Crypto Logo"
+        accessibilityLabel="CepteCash Logo"
         accessibilityRole="image"
       />
     </ThemedView>

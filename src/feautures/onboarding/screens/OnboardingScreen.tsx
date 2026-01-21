@@ -92,8 +92,8 @@ export default function OnboardingScreen({ navigation }: Props) {
 
             <View style={styles.logoContainer}>
               <View style={styles.logoTextContainer}>
-                <ThemedText style={styles.logoTextFin}>fin</ThemedText>
-                <ThemedText style={styles.logoTextTrack}>TRACK</ThemedText>
+                <ThemedText style={styles.logoTextFin}>cepte</ThemedText>
+                <ThemedText style={styles.logoTextTrack}>CASH</ThemedText>
               </View>
             </View>
           </View>

@@ -111,18 +111,18 @@ export const portfolioAnalysis = {
   export const slides: Slide[] = [
     {
       key: 'slide-1',
-      title: 'Portföyünü tek yerden yönet',
-      subtitle: 'Tüm borsalardaki kripto varlıklarını FinTrack ile tek ekrandan takip et.',
+      title: 'Portföyün konuşsun, sen haberdar ol!',
+      subtitle: 'CepteCash, sahip olduğun varlıkları izler ve değiştiğinde seni bilgilendirir.',
     },
     {
       key: 'slide-2',
-      title: 'Piyasayı anlık izle',
-      subtitle: 'Canlı fiyatlar, trendler ve piyasayı okumayı kolaylaştıran sade grafikler.',
+      title: 'Değerin cebinde, kontrol sende!',
+      subtitle: 'CepteCash ile sahip olduğun değerler değiştiğinde anında bildirim al.',
     },
     {
       key: 'slide-3',
-      title: 'Hedefler koy, riskini yönet',
-      subtitle: 'Uyarılar ve hedefler ile duygusal kararları azalt, stratejine sadık kal.',
+      title: 'Değişimi bekleme, anında öğren!',
+      subtitle: 'Canlı fiyatlar, trendler ve piyasayı okumayı kolaylaştıran sade grafikler.',
     },
   ];
 
