@@ -1,7 +1,8 @@
 import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { onAuthStateChanged, User } from 'firebase/auth';
+import { onAuthStateChanged, onIdTokenChanged, User } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
+import { tokenService } from '@/services/api/tokenService';
 import { getAuth } from '@/store/auth';
 
 export interface AuthContextType {
@@ -39,6 +40,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     return unsubscribe;
   }, [dispatch]);
+
+  useEffect(() => {
+    const unsubscribe = onIdTokenChanged(auth, async (currentUser) => {
+      if (!currentUser) {
+        await tokenService.clear();
+        return;
+      }
+
+      const idToken = await currentUser.getIdToken();
+      await tokenService.setToken(idToken);
+    });
+
+    return unsubscribe;
+  }, []);
 
   return (
     <AuthContext.Provider value={{ user, loading }}>
