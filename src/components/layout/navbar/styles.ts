@@ -1,5 +1,5 @@
 import { StyleSheet, TextStyle,ViewStyle } from 'react-native';
-import { NAVBAR_COLORS, NAVBAR_CONSTANTS } from '@/constants/navbar';
+import { NAVBAR_COLORS, NAVBAR_CONSTANTS } from '@/theme/colors';
 
 export const styles = StyleSheet.create({
   container: {
@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     height: 56,
     alignItems: 'center',
     justifyContent: 'space-around',
-    paddingTop: 8, // Indicator için yer - artırıldı
+    paddingTop: 8,
   },
   navItem: {
     flex: 1,
@@ -44,7 +44,6 @@ export const styles = StyleSheet.create({
   },
 });
 
-// Dinamik stiller için helper fonksiyonlar
 export const getDynamicStyles = () => ({
   container: (
     backgroundColor: string,

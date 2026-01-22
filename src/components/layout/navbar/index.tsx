@@ -9,11 +9,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { usePathname, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemedText } from '@/components/ui/ThemedText';
-import { NAVBAR_COLORS } from '@/constants/navbar';
 import { navItems } from '@/db';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useThemeColor } from '@/hooks/use-theme-color';
 import { Colors } from '@/theme';
+import { NAVBAR_COLORS } from '@/theme/colors';
 import { getDynamicStyles,styles } from './styles';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
