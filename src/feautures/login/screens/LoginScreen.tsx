@@ -69,7 +69,7 @@ export default function LoginScreen() {
         return;
       }
 
-      const idToken = await user.getIdToken();
+      const idToken = await user.getIdToken(true);
 
       try {
         const result = await dispatch(getAuth(idToken) as any).unwrap();
