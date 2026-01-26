@@ -8,6 +8,7 @@ import { ThemedView } from '@/components/ui/ThemedView';
 import { useTheme } from '@/contexts/ThemeContext';
 import { RootStackParamList } from '@/navigation/types';
 import { IconColors, SemanticColors } from '@/theme';
+import { CurrencyPickerModal } from '../CurrencyPickerModal';
 import { styles } from './styles';
 
 type SettingItem = {
@@ -25,6 +26,8 @@ export function ProfileSettings() {
   const navigation = useNavigation<NavigationProp>();
   const { themeMode, colorScheme, setThemeMode } = useTheme();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const [showCurrencyPicker, setShowCurrencyPicker] = useState(false);
+  const [currency, setCurrency] = useState<'TRY' | 'USD' | 'EUR'>('TRY');
 
   const handleResetPassword = () => {
     navigation.navigate('PasswordReset');
@@ -35,7 +38,7 @@ export function ProfileSettings() {
   };
 
   const handleCurrency = () => {
-    Alert.alert('Para Birimi', 'Para birimi seçimi yakında eklenecek.');
+    setShowCurrencyPicker(true);
   };
 
   const handlePrivacy = () => {
@@ -153,6 +156,12 @@ export function ProfileSettings() {
           </View>
         ))}
       </ThemedView>
+      <CurrencyPickerModal
+        visible={showCurrencyPicker}
+        onClose={() => setShowCurrencyPicker(false)}
+        selectedCurrency={currency}
+        onSelectCurrency={setCurrency}
+      />
     </ThemedView>
   );
 }
