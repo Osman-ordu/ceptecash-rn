@@ -12,6 +12,7 @@ import { styles } from './PrivacyScreen.styles';
 export default function PrivacyScreen() {
   const navigation = useNavigation();
   const iconColor = useThemeColor({ light: Colors.light.icon, dark: Colors.dark.icon }, 'icon');
+  const backButtonBg = useThemeColor({}, 'card');
 
   return (
     <ScreenLayout scrollContentStyle={styles.scrollContent}>
@@ -21,12 +22,19 @@ export default function PrivacyScreen() {
       >
         <ScrollView contentContainerStyle={styles.scrollViewContent} keyboardShouldPersistTaps="handled">
           <ThemedView card style={styles.card}>
-            <Pressable style={styles.backButton} onPress={() => navigation.goBack()} hitSlop={8}>
-              <Ionicons name="arrow-back" size={22} color={iconColor} />
-            </Pressable>
-            <ThemedText type="title" style={styles.title}>
-              Gizlilik Politikasi
-            </ThemedText>
+            <View style={styles.headerRow}>
+              <Pressable
+                style={[styles.backButton, { backgroundColor: backButtonBg }]}
+                onPress={() => navigation.goBack()}
+                hitSlop={8}
+              >
+                <Ionicons name="arrow-back" size={20} color={iconColor} />
+              </Pressable>
+              <ThemedText type="title" style={styles.headerTitle}>
+                Gizlilik Politikasi
+              </ThemedText>
+              <View style={styles.headerSpacer} />
+            </View>
             <ThemedText style={styles.subtitle}>Ceptecash</ThemedText>
             <View style={styles.content}>
               <ThemedText style={styles.paragraph}>

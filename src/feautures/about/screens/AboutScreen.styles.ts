@@ -20,18 +20,22 @@ export const styles = StyleSheet.create({
     paddingVertical: 28,
     alignItems: 'center',
   },
+  headerRow: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
   backButton: {
-    alignSelf: 'flex-start',
-    marginBottom: 8,
+    padding: 6,
+    borderRadius: 10,
   },
-  title: {
-    marginBottom: 8,
+  headerTitle: {
+    flex: 1,
     textAlign: 'center',
   },
-  subtitle: {
-    marginBottom: 20,
-    textAlign: 'center',
-    opacity: 0.7,
+  headerSpacer: {
+    width: 34,
   },
   content: {
     width: '100%',

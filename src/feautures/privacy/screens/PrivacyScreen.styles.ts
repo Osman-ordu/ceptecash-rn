@@ -20,18 +20,27 @@ export const styles = StyleSheet.create({
     paddingVertical: 28,
     alignItems: 'center',
   },
-  backButton: {
-    alignSelf: 'flex-start',
-    marginBottom: 8,
+  headerRow: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
   },
-  title: {
-    marginBottom: 8,
+  backButton: {
+    padding: 6,
+    borderRadius: 10,
+  },
+  headerTitle: {
+    flex: 1,
     textAlign: 'center',
   },
   subtitle: {
     marginBottom: 20,
     textAlign: 'center',
     opacity: 0.7,
+  },
+  headerSpacer: {
+    width: 34,
   },
   content: {
     width: '100%',

@@ -12,6 +12,7 @@ import { styles } from './AboutScreen.styles';
 export default function AboutScreen() {
   const navigation = useNavigation();
   const iconColor = useThemeColor({ light: Colors.light.icon, dark: Colors.dark.icon }, 'icon');
+  const backButtonBg = useThemeColor({}, 'card');
 
   return (
     <ScreenLayout scrollContentStyle={styles.scrollContent}>
@@ -24,21 +25,23 @@ export default function AboutScreen() {
           keyboardShouldPersistTaps="handled"
         >
           <ThemedView card style={styles.card}>
-            <Pressable
-              style={styles.backButton}
-              onPress={() => navigation.goBack()}
-              hitSlop={8}
-            >
-              <Ionicons name="arrow-back" size={22} color={iconColor} />
-            </Pressable>
-            <ThemedText type="title" style={styles.title}>
-              Hakkında
-            </ThemedText>
-            <ThemedText style={styles.subtitle}>
-            </ThemedText>
+            <View style={styles.headerRow}>
+              <Pressable
+                style={[styles.backButton, { backgroundColor: backButtonBg }]}
+                onPress={() => navigation.goBack()}
+                hitSlop={8}
+              >
+                <Ionicons name="arrow-back" size={20} color={iconColor} />
+              </Pressable>
+              <ThemedText type="title" style={styles.headerTitle}>
+                Hakkında
+              </ThemedText>
+              <View style={styles.headerSpacer} />
+            </View>
             <View style={styles.content}>
               <ThemedText style={styles.paragraph}>
-              <ThemedText style={styles.brandText}>CepteCash</ThemedText> sahip olduğun varlıkların değerini senin adına takip
+                <ThemedText style={styles.brandText}>CepteCash</ThemedText>{' '}
+                sahip olduğun varlıkların değerini senin adına takip
                 eden akıllı bir portföy asistanıdır. Piyasayı sürekli kontrol
                 etmek zorunda kalmadan, önemli değişikliklerden anında haberdar
                 olmanı sağlar.
