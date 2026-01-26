@@ -2,6 +2,8 @@ import { ICurrencyData } from '@/types';
 
 export interface IMarketTableProps {
   currencies: Record<string, ICurrencyData>;
+  symbols?: string[];
+  currencyLabels?: Record<string, string>;
   isConnected: boolean;
 }
 

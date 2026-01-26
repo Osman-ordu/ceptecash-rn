@@ -5,6 +5,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemedText } from '@/components/ui/ThemedText';
 import { ThemedView } from '@/components/ui/ThemedView';
+import { useCurrency } from '@/contexts/CurrencyContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { RootStackParamList } from '@/navigation/types';
 import { IconColors, SemanticColors } from '@/theme';
@@ -25,9 +26,9 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 export function ProfileSettings() {
   const navigation = useNavigation<NavigationProp>();
   const { themeMode, colorScheme, setThemeMode } = useTheme();
+  const { currency, setCurrency } = useCurrency();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [showCurrencyPicker, setShowCurrencyPicker] = useState(false);
-  const [currency, setCurrency] = useState<'TRY' | 'USD' | 'EUR'>('TRY');
 
   const handleResetPassword = () => {
     navigation.navigate('PasswordReset');

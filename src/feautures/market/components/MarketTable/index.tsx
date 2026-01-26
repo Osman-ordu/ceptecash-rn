@@ -3,12 +3,17 @@ import { MarketTableRow } from '@/components/ui/MarketTableRow';
 import { ThemedText } from '@/components/ui/ThemedText';
 import { ThemedView } from '@/components/ui/ThemedView';
 import { formatTimeString } from '@/utils/general';
-import { CURRENCIES, CURRENCIES_NAMES } from '../../constants';
+import { CURRENCIES_NAMES } from '../../constants';
 import { useMarketTableStyles } from './hooks';
 import { styles } from './styles';
 import { IMarketTableProps } from './types';
 
-export function MarketTable({ currencies, isConnected }: IMarketTableProps) {
+export function MarketTable({
+  currencies,
+  isConnected,
+  symbols,
+  currencyLabels,
+}: IMarketTableProps) {
   const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
   const dynamicStyles = useMarketTableStyles();
 
@@ -27,7 +32,11 @@ export function MarketTable({ currencies, isConnected }: IMarketTableProps) {
   const currencyData = React.useMemo(() => {
     if (!isConnected) return [];
 
-    return CURRENCIES?.map((currency) => {
+    const listSymbols =
+      symbols && symbols.length > 0 ? symbols : Object.keys(currencies);
+    const labelMap = currencyLabels ?? {};
+
+    const dataFromList = listSymbols?.map((currency) => {
       const data = currencies[currency];
       if (!data || !data.buyPrice || !data.sellPrice) return null;
 
@@ -36,7 +45,10 @@ export function MarketTable({ currencies, isConnected }: IMarketTableProps) {
 
       return {
         currency,
-        currencyName: CURRENCIES_NAMES[currency as keyof typeof CURRENCIES_NAMES] || currency,
+        currencyName:
+          labelMap[currency] ||
+          CURRENCIES_NAMES[currency as keyof typeof CURRENCIES_NAMES] ||
+          currency,
         buyPrice: data.buyPrice,
         sellPrice: data.sellPrice,
         changePercent: data.changePercent || 0,
@@ -45,7 +57,30 @@ export function MarketTable({ currencies, isConnected }: IMarketTableProps) {
     })
       .filter((item): item is NonNullable<typeof item> => item !== null)
       .sort((a, b) => a.currencyName.localeCompare(b.currencyName));
-  }, [currencies, isConnected]);
+
+    if (dataFromList.length > 0) {
+      return dataFromList;
+    }
+
+    return Object.values(currencies)
+      .filter((data) => data && data.buyPrice && data.sellPrice)
+      .map((data) => {
+        const timestamp = data.timestamp || Date.now();
+        const time = formatTimeString(timestamp);
+        return {
+          currency: data.symbol,
+          currencyName:
+            labelMap[data.symbol] ||
+            CURRENCIES_NAMES[data.symbol as keyof typeof CURRENCIES_NAMES] ||
+            data.symbol,
+          buyPrice: data.buyPrice,
+          sellPrice: data.sellPrice,
+          changePercent: data.changePercent || 0,
+          time,
+        };
+      })
+      .sort((a, b) => a.currencyName.localeCompare(b.currencyName));
+  }, [currencies, currencyLabels, isConnected, symbols]);
 
   if (!isConnected) {
     return (
