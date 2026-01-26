@@ -76,6 +76,27 @@ export const formatTimeString = (timestamp: number): string => {
   });
 };
 
+export const formatCurrencyAmount = (
+  value: number | string,
+  currency: 'TRY' | 'USD' | 'EUR' = 'TRY'
+): string => {
+  const numericValue = typeof value === 'string' ? Number(value) : value;
+  if (!Number.isFinite(numericValue)) {
+    return '';
+  }
+
+  const localeMap: Record<'TRY' | 'USD' | 'EUR', string> = {
+    TRY: 'tr-TR',
+    USD: 'en-US',
+    EUR: 'de-DE',
+  };
+
+  return new Intl.NumberFormat(localeMap[currency], {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(numericValue);
+};
+
 export const formatPrice = (price: number, decimals: number = 4): string => {
   return price.toFixed(decimals);
 };

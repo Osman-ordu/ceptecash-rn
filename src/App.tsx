@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { DarkTheme, DefaultTheme, NavigationContainer, Theme } from '@react-navigation/native';
 import ToastProvider from 'toastify-react-native';
 import { AuthProvider } from '@/contexts/AuthContext';
+import { CurrencyProvider } from '@/contexts/CurrencyContext';
 import { ThemeProvider, useTheme } from '@/contexts/ThemeContext';
 import { Colors } from '@/theme';
 import RootNavigator from './navigation';
@@ -47,8 +48,10 @@ export default function AppRoot() {
     <Provider store={store}>
       <AuthProvider>
         <ThemeProvider>
-          <AppContent />
-          <ToastProvider />
+          <CurrencyProvider>
+            <AppContent />
+            <ToastProvider />
+          </CurrencyProvider>
         </ThemeProvider>
       </AuthProvider>
     </Provider>

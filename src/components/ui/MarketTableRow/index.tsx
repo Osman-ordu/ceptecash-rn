@@ -3,7 +3,8 @@ import { LayoutAnimation, Platform,Pressable, UIManager } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemedText } from '@/components/ui/ThemedText';
 import { ThemedView } from '@/components/ui/ThemedView';
-import { formatCurrencyPair,formatPercent, formatPrice } from '@/utils/general';
+import { useCurrency } from '@/contexts/CurrencyContext';
+import { formatCurrencyAmount, formatCurrencyPair, formatPercent } from '@/utils/general';
 import { MARKET_TABLE_ROW_LABELS } from './constants';
 import { useChangeIndicator,useMarketTableRowStyles } from './hooks';
 import { styles } from './styles';
@@ -26,12 +27,13 @@ export function MarketTableRow({
 }: IMarketTableRowProps) {
   const dynamicStyles = useMarketTableRowStyles();
   const changeIndicator = useChangeIndicator(changePercent);
+  const { currency: preferredCurrency } = useCurrency();
 
   const currencyPair = formatCurrencyPair(currency);
-  const formattedPrice = formatPrice(buyPrice);
+  const formattedPrice = formatCurrencyAmount(buyPrice, preferredCurrency);
   const formattedPercent = formatPercent(changePercent);
-  const formattedBuyPrice = formatPrice(buyPrice);
-  const formattedSellPrice = formatPrice(sellPrice);
+  const formattedBuyPrice = formatCurrencyAmount(buyPrice, preferredCurrency);
+  const formattedSellPrice = formatCurrencyAmount(sellPrice, preferredCurrency);
 
   const buyLabel = labels?.buy ?? MARKET_TABLE_ROW_LABELS.BUY;
   const sellLabel = labels?.sell ?? MARKET_TABLE_ROW_LABELS.SELL;
