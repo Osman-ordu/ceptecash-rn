@@ -42,7 +42,7 @@ export function ProfileSettings() {
   };
 
   const handlePrivacy = () => {
-    Alert.alert('Gizlilik', 'Gizlilik ayarları yakında eklenecek.');
+    navigation.navigate('Privacy');
   };
 
   const handleAbout = () => {
