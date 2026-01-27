@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 16,
     paddingHorizontal: 4,
-    gap: 16,
+    gap: 8,
   },
   navButton: {
     flexDirection: 'row',
@@ -22,6 +22,7 @@ export const styles = StyleSheet.create({
   },
   backButton: {
     minWidth: 64,
+    flexShrink: 0,
   },
   backButtonDisabled: {
     opacity: 0.3,
@@ -29,6 +30,12 @@ export const styles = StyleSheet.create({
   nextButton: {
     minWidth: 120,
     justifyContent: 'flex-end',
+    flexGrow: 1,
+    alignSelf: 'stretch',
+  },
+  nextLabel: {
+    flexShrink: 1,
+    textAlign: 'right',
   },
 });
 

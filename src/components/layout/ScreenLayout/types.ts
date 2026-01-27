@@ -8,5 +8,8 @@ export interface IScreenLayoutProps {
   scrollContentStyle?: StyleProp<ViewStyle>;
   showsVerticalScrollIndicator?: boolean;
   keyboardShouldPersistTaps?: 'always' | 'never' | 'handled';
+  keyboardAvoiding?: boolean;
+  keyboardVerticalOffset?: number;
+  keyboardBehavior?: 'height' | 'position' | 'padding';
 }
 

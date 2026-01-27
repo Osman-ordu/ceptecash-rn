@@ -74,7 +74,12 @@ export function NavigationButtons({
             onPress={onNext}
             activeOpacity={0.7}
           >
-            <ThemedText style={[labelStyle, { color: tintColor }]}>
+            <ThemedText
+              style={[labelStyle, styles.nextLabel, { color: tintColor }]}
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.85}
+            >
               {nextLabel}
             </ThemedText>
             <Ionicons name="chevron-forward" size={18} color={tintColor} />
@@ -86,7 +91,12 @@ export function NavigationButtons({
             activeOpacity={0.7}
             disabled={loading}
           >
-            <ThemedText style={[labelStyle, { color: tintColor }]}>
+            <ThemedText
+              style={[labelStyle, styles.nextLabel, { color: tintColor }]}
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.85}
+            >
               {nextLabel}
             </ThemedText>
           </TouchableOpacity>

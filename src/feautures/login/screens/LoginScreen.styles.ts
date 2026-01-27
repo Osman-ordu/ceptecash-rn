@@ -6,13 +6,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     flexGrow: 1,
   },
-  keyboardView: {
-    flex: 1,
-  },
-  scrollViewContent: {
-    flexGrow: 1,
-    justifyContent: 'center',
-  },
   card: {
     borderRadius: 16,
     padding: 24,

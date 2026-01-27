@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView,View } from 'react-native';
+import { View } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
@@ -94,62 +94,52 @@ export default function LoginScreen() {
   };
 
   return (
-    <ScreenLayout scrollContentStyle={styles.scrollContent}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.keyboardView}
-      >
-        <ScrollView
-          contentContainerStyle={styles.scrollViewContent}
-          keyboardShouldPersistTaps="handled"
-        >
-          <ThemedView card style={styles.card}>
-            <ThemedText type="title" style={styles.title}>
-              Giriş Yap
-            </ThemedText>
-            <ThemedText style={styles.subtitle}>
-              Hesabınıza giriş yaparak devam edin
-            </ThemedText>
+    <ScreenLayout scrollContentStyle={styles.scrollContent} keyboardAvoiding>
+      <ThemedView card style={styles.card}>
+        <ThemedText type="title" style={styles.title}>
+          Giriş Yap
+        </ThemedText>
+        <ThemedText style={styles.subtitle}>
+          Hesabınıza giriş yaparak devam edin
+        </ThemedText>
 
-            <View style={styles.formContainer}>
-              <View style={styles.inputWrapper}>
-                <EmailInput
-                  control={control}
-                  errors={errors}
-                  dynamicStyles={dynamicStyles}
-                />
-              </View>
+        <View style={styles.formContainer}>
+          <View style={styles.inputWrapper}>
+            <EmailInput
+              control={control}
+              errors={errors}
+              dynamicStyles={dynamicStyles}
+            />
+          </View>
 
-              <View style={styles.inputWrapper}>
-                <PasswordInput
-                  control={control}
-                  errors={errors}
-                  dynamicStyles={dynamicStyles}
-                  label="Şifre"
-                />
-              </View>
-            </View>
+          <View style={styles.inputWrapper}>
+            <PasswordInput
+              control={control}
+              errors={errors}
+              dynamicStyles={dynamicStyles}
+              label="Şifre"
+            />
+          </View>
+        </View>
 
-            <View style={styles.buttonContainer}>
-              <Button
-                title="Giriş Yap"
-                onPress={handleSubmit(login)}
-                variant="primary"
-                size="large"
-                loading={loading}
-                style={styles.button}
-              />
-              <Button
-                title="Üye Ol"
-                onPress={() => navigation.navigate('Register')}
-                variant="outline"
-                size="large"
-                style={styles.button}
-              />
-            </View>
-          </ThemedView>
-        </ScrollView>
-      </KeyboardAvoidingView>
+        <View style={styles.buttonContainer}>
+          <Button
+            title="Giriş Yap"
+            onPress={handleSubmit(login)}
+            variant="primary"
+            size="large"
+            loading={loading}
+            style={styles.button}
+          />
+          <Button
+            title="Üye Ol"
+            onPress={() => navigation.navigate('Register')}
+            variant="outline"
+            size="large"
+            style={styles.button}
+          />
+        </View>
+      </ThemedView>
     </ScreenLayout>
   );
 }

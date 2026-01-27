@@ -6,13 +6,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     flexGrow: 1,
   },
-  keyboardView: {
-    flex: 1,
-  },
-  scrollViewContent: {
-    flexGrow: 1,
-    justifyContent: 'center',
-  },
   card: {
     borderRadius: 16,
     padding: 24,
@@ -20,6 +13,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     overflow: 'hidden',
     minHeight: 520,
+    height: 520,
   },
   headerContainer: {
     width: '100%',
@@ -36,7 +30,7 @@ export const styles = StyleSheet.create({
   formContainer: {
     width: '100%',
     marginBottom: 24,
-    minHeight: 240,
+    height: 240,
     justifyContent: 'flex-start',
   },
 });

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
+import { View } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -108,35 +108,25 @@ export default function RegisterScreen() {
   };
 
   return (
-    <ScreenLayout scrollContentStyle={styles.scrollContent}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.keyboardView}
-      >
-        <ScrollView
-          contentContainerStyle={styles.scrollViewContent}
-          keyboardShouldPersistTaps="handled"
-        >
-          <ThemedView card style={styles.card}>
-            <View style={styles.headerContainer}>
-              <StepHeader step={currentStep} />
-            </View>
-            <View style={styles.formContainer}>{renderStepContent()}</View>
-            <View style={styles.progressBarContainer}>
-              <ProgressBar currentStep={currentStep} totalSteps={TOTAL_STEPS} />
-            </View>
-            <NavigationButtons
-              currentStep={currentStep}
-              totalSteps={TOTAL_STEPS}
-              loading={loading}
-              onNext={handleNext}
-              onBack={handleBack}
-              onSubmit={handleSubmit(register)}
-              onLogin={() => navigation.navigate('Login')}
-            />
-          </ThemedView>
-        </ScrollView>
-      </KeyboardAvoidingView>
+    <ScreenLayout scrollContentStyle={styles.scrollContent} keyboardAvoiding>
+      <ThemedView card style={styles.card}>
+        <View style={styles.headerContainer}>
+          <StepHeader step={currentStep} />
+        </View>
+        <View style={styles.formContainer}>{renderStepContent()}</View>
+        <View style={styles.progressBarContainer}>
+          <ProgressBar currentStep={currentStep} totalSteps={TOTAL_STEPS} />
+        </View>
+        <NavigationButtons
+          currentStep={currentStep}
+          totalSteps={TOTAL_STEPS}
+          loading={loading}
+          onNext={handleNext}
+          onBack={handleBack}
+          onSubmit={handleSubmit(register)}
+          onLogin={() => navigation.navigate('Login')}
+        />
+      </ThemedView>
     </ScreenLayout>
   );
 }
