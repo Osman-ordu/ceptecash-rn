@@ -8,11 +8,15 @@ import { ThemedText } from '@/components/ui/ThemedText';
 import { ThemedView } from '@/components/ui/ThemedView';
 import { auth } from '@/lib/firebase';
 import { RootStackParamList } from '@/navigation/types';
+import { useAppDispatch } from '@/store/hooks';
+import { deleteUser } from '@/store/user';
 import { SemanticColors } from '@/theme';
+import { showErrorToast, showSuccessToast } from '@/utils/toast';
 import { styles } from './styles';
 
 export function ProfileActions() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const dispatch = useAppDispatch();
   const handleLogout = () => {
     Alert.alert(
       'Çıkış Yap',
@@ -52,9 +56,19 @@ export function ProfileActions() {
         {
           text: 'Sil',
           style: 'destructive',
-          onPress: () => {
-            // TODO: Implement delete account logic
-            console.log('Delete account');
+          onPress: async () => {
+            try {
+              const response = await dispatch(deleteUser()).unwrap();
+              await signOut(auth);
+              showSuccessToast(response?.message || 'Hesap silindi.');
+              navigation.navigate('Login' as keyof RootStackParamList);
+            } catch (error: any) {
+              const message =
+                error?.response?.data?.message ||
+                error?.message ||
+                'Hesap silinirken bir hata oluştu.';
+              showErrorToast(message);
+            }
           },
         },
       ]

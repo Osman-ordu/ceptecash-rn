@@ -18,3 +18,8 @@ export interface IUserResponse {
     message: string;
     data?: IUser;
   }
+
+export interface IDeleteUserResponse {
+    success: boolean;
+    message: string;
+}
