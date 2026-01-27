@@ -42,8 +42,10 @@ export function Tabs({ tabs, defaultTab, onTabChange }: ITabsProps) {
                 style={[
                   styles.tabText,
                   { color: isActive ? textColor : textColor + '70' },
-                  isActive && styles.activeTabText,
                 ]}
+                numberOfLines={1}
+                adjustsFontSizeToFit
+                minimumFontScale={0.85}
               >
                 {tab.label}
               </ThemedText>

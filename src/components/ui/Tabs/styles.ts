@@ -32,9 +32,8 @@ export const styles = StyleSheet.create({
   tabText: {
     fontSize: 13,
     fontWeight: '500',
-  },
-  activeTabText: {
-    fontWeight: '600',
+    flexShrink: 1,
+    textAlign: 'center',
   },
   contentContainer: {
     flex: 1,
